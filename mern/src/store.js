@@ -2,10 +2,11 @@ import { createStore, combineReducers, applyMiddleware} from 'redux'
 
 import {composeWithDevTools} from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk';
-import { productListReducer } from './reducers/productReducers'
+import { productListReducer,productDetailsReducer } from './reducers/productReducers'
 
 const reducer = combineReducers({
-     productList: productListReducer
+     productList: productListReducer,
+     productDetails: productDetailsReducer
 })
 
 
@@ -19,7 +20,6 @@ const store = createStore(
      initialState,
      composeWithDevTools(applyMiddleware(...middleware))
 )
-
 
 
 export default store
