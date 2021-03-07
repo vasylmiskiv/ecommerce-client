@@ -1,18 +1,18 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import colors from 'colors'
+// import data users, products
 import users from './data/users.js'
 import products from './data/products.js'
+// import Schemes
 import User from './models/userModel.js'
 import Product from './models/productModel.js'
 import Order from './models/orderModel.js'
+// import connect to mongodb
 import connectDB from './config/db.js'
-
 
 dotenv.config()
 
  connectDB()
-
 
  const importData = async () =>{
      try {
@@ -30,14 +30,15 @@ dotenv.config()
         const sampleProducts = products.map((product) => {
             return {...product, user: adminUser}
         })
+
         // мы пушим в наш БД всю инфу с переменной продуктс
         await Product.insertMany(sampleProducts)
-
         console.log('Data imported')
+
         // выходит с программы
         process.exit()
-     } catch (erorr) {
-        console.erorr(error)
+     } catch (error) {
+        console.error(error)
         process.exit(1)
      }
  }
@@ -47,14 +48,11 @@ dotenv.config()
        await Order.deleteMany()
        await Product.deleteMany()
        await User.deleteMany()
-
-       
-
        console.log('Data destroyed')
        // выходит с программы
        process.exit()
     } catch (erorr) {
-       console.erorr(error.red)
+       console.error(error.red)
        process.exit(1)
     }
 }
