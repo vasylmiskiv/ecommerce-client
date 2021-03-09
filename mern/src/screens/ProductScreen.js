@@ -17,12 +17,10 @@ const ProductScreen = ({ match, history }) => {
            dispatch(listProductDetails(match.params.id))
           
         }, [dispatch, match])
-        console.log(productDetails)
+        
 
 const addToCartHandler = () => {
-    console.log(typeof history)
 history.push(`/cart/${match.params.id}?qty=${qty}`)
-    console.log(history)
 }
 
     return (

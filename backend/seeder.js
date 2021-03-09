@@ -14,7 +14,7 @@ dotenv.config()
 
  connectDB()
 
- const importData = async () =>{
+ const importData = async () => {
      try {
         await Order.deleteMany()
         await Product.deleteMany()

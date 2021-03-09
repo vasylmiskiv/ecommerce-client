@@ -11,9 +11,7 @@ const Loader = () => {
         style = {{width: '80px', height: '80px'}}>
         </Spinner>
           </div>
-    )
-  
-       
+    )    
     }
 
 export default Loader

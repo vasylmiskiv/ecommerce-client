@@ -6,14 +6,13 @@ import asyncHandler from 'express-async-handler'
 
 const router = express.Router()
 
- // @desc Fetch all products
+// @desc Fetch all products
 // @route get /api/products
 // @access Public
 
 
 router.get('/', asyncHandler(async (req,res)=> {
     const products = await Product.find({})
-  
         res.json(products)
  }))
 
