@@ -1,6 +1,5 @@
 import bcrypt from 'bcrypt'
 
-
 const users = [
     {
         name: 'Admin user',
@@ -21,6 +20,5 @@ const users = [
 
     }
 ]
-
 
 export default users
