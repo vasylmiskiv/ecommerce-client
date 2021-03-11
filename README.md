@@ -8,4 +8,4 @@ Stack of technologies:
 * Express.js
 * Mongoose
 * Mongo DB
-* Boostrap 
+* Bootstrap 
