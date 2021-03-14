@@ -4,13 +4,14 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk';
 import { cartReducer } from './reducers/cartReducers';
 import { productListReducer, productDetailsReducer } from './reducers/productReducers'
-import { userLoginReducer } from './reducers/userReducers.js'
+import { userLoginReducer, userRegisterReducer } from './reducers/userReducers.js'
 
 const reducer = combineReducers({
      productList: productListReducer,
      productDetails: productDetailsReducer,
      cart: cartReducer,
-     userLogin: userLoginReducer
+     userLogin: userLoginReducer,
+     userRegister: userRegisterReducer
 })
 
 // получаем items из локал сторедж для товаров
