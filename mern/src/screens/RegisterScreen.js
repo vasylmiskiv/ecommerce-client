@@ -6,7 +6,7 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import {register} from '../actions/userActions'
 import Message from "../components/Message"
-import ProductScreen from "./ProductScreen";
+
 
 const RegisterScreen = ({location, history}) => {
     const [name, setName] = useState('')

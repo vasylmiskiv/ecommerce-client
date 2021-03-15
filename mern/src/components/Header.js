@@ -24,7 +24,7 @@ const Header = () => {
                 <Container>
                     <LinkContainer to = '/'>
                     <Navbar.Brand>
-                        TurboShop
+                        TURBOSHOP
                         </Navbar.Brand>
                     </LinkContainer>
 
@@ -55,10 +55,7 @@ const Header = () => {
             </Container>
       </Navbar>
         </header>
-  
-        
-       
-     
+
     )
 }
 
