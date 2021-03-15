@@ -6,6 +6,7 @@ import { cartReducer } from './reducers/cartReducers';
 import { productListReducer, productDetailsReducer } from './reducers/productReducers'
 import { userLoginReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer } from './reducers/userReducers.js'
 
+
 const reducer = combineReducers({
      productList: productListReducer,
      productDetails: productDetailsReducer,
@@ -13,7 +14,8 @@ const reducer = combineReducers({
      userLogin: userLoginReducer,
      userRegister: userRegisterReducer,
      userDetails: userDetailsReducer,
-     userUpdateProfile: userUpdateProfileReducer
+     userUpdateProfile: userUpdateProfileReducer,
+
 })
 
 // получаем items из локал сторедж для товаров
@@ -24,10 +26,15 @@ const cartItemsFromStorage = localStorage.getItem('cartItems')
 const userInfoFromStorage = localStorage.getItem('userInfo')
 ? JSON.parse(localStorage.getItem('userInfo')) : null
 
+//get from localstorage itemss address
+const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
+    ? JSON.parse(localStorage.getItem('shippingAddress')) : {}
+
 // origin state
 const initialState = {
-     cart: {cartItems: cartItemsFromStorage},
-     userLogin: {userInfo: userInfoFromStorage}
+     cart: {cartItems: cartItemsFromStorage, shippingAddress: shippingAddressFromStorage},
+     userLogin: {userInfo: userInfoFromStorage},
+
 }
 
 const middleware = [thunkMiddleware]
