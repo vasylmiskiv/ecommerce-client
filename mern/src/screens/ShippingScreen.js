@@ -1,7 +1,7 @@
 import React, {useState}from 'react'
 import {Form, Button, Row, Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
-import {saveShippingAdress} from "../actions/cartActions";
+import {saveShippingAddress} from "../actions/cartActions";
 
 import CheckoutSteps from "../components/CheckoutSteps";
 import FormContainer from "../components/FormContainer";
@@ -19,7 +19,7 @@ const ShippingScreen = ({history}) => {
 
     const onSubmitHandler = e => {
         e.preventDefault()
-       dispatch(saveShippingAdress({address, city, postalCode, country}))
+       dispatch(saveShippingAddress({address, city, postalCode, country}))
         history.push('/payment')
         console.log(history)
     }

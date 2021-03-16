@@ -22,7 +22,7 @@ const CartScreen = ({match, location, history}) => {
     useEffect(()=>{
         if (productId) {
             dispatch(addToCart(productId,qty))
-            console.log('123')
+            console.log(qty)
         }
 
     }, [dispatch, productId, qty])

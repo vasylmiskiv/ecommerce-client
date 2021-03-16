@@ -16,7 +16,7 @@ const PaymentScreen= ({history}) => {
         history.push('/shipping')
     }
 
-    const [paymentMethod, setPaymentMethod] = useState('')
+    const [paymentMethod, setPaymentMethod] = useState('Paypal')
 
 
     const onSubmitHandler = e => {
@@ -53,7 +53,7 @@ const PaymentScreen= ({history}) => {
                     </Form.Check>
                 </Col>
                 </Form.Group>
-                <Button type="submit" variant = "primary" >Conteinue</Button>
+                <Button type="submit" variant = "primary" >Continue</Button>
             </Form>
         </FormContainer>
     )
