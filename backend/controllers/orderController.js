@@ -37,7 +37,6 @@ const addOrderItems= asyncHandler(async(req,res) => {
 
 //get order by id
 //GET  api/orders/:id
-
 const getOrderById = asyncHandler(async(req,res) => {
      const order= await (await Order.findById(req.params.id))
 
@@ -48,6 +47,30 @@ const getOrderById = asyncHandler(async(req,res) => {
         throw Error ('Order not found')
      }
  })
- 
 
-export {addOrderItems, getOrderById}
+
+//get api/orders/:id/pay
+const updateOrderToPaid = asyncHandler(async(req,res) => {
+    const order = await (await Order.findById(req.params.id))
+
+    if(order) {
+        order.isPaid = true
+        order.paidAt = Date.now()
+        order.paymentResult = {
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.payer.email_address
+        }
+
+    //save db
+        const updateOrder = await order.save()
+
+    res.json(updateOrder)
+    } else {
+        res.status(404)
+        throw Error ('Order not found')
+    }
+})
+
+export {addOrderItems, getOrderById, updateOrderToPaid}

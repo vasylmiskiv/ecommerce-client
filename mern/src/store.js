@@ -11,7 +11,11 @@ import { userLoginReducer,
 
 } from './reducers/userReducers.js'
 
-import {orderCreateReducer, orderDetailsReducer} from './reducers/orderReducers'
+import {
+     orderCreateReducer,
+     orderDetailsReducer,
+     orderPayReducer
+} from './reducers/orderReducers'
 
 const reducer = combineReducers({
      productList: productListReducer,
@@ -22,7 +26,8 @@ const reducer = combineReducers({
      userDetails: userDetailsReducer,
      userUpdateProfile: userUpdateProfileReducer,
      orderCreate: orderCreateReducer,
-    orderDetails: orderDetailsReducer
+     orderDetails: orderDetailsReducer,
+     orderPay: orderPayReducer
 })
 
 // получаем items из локал сторедж для товаров
