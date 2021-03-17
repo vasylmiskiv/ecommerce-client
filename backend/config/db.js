@@ -1,6 +1,4 @@
-
 import mongoose from 'mongoose'
-
 
 const connectDB = async () => {
     try {
@@ -9,7 +7,7 @@ const connectDB = async () => {
             useNewUrlParser : true,
             useCreateIndex : true
         })
-        console.log('MongoDb connected '.blue + conn.connection.host.cyan.underline)
+        console.log('MongoDB connected '.blue + conn.connection.host.cyan.underline)
     } catch (eror){
         console.error('Error ' + error.message.red.underline.bold)
         process.exit(1)

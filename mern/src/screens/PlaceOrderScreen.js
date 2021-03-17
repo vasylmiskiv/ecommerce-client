@@ -1,31 +1,52 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import {Form, Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
-import {saveShippingAdress} from "../actions/cartActions";
+import { createOrder } from "../actions/orderActions";
 
 import CheckoutSteps from "../components/CheckoutSteps";
 import Message from "../components/Message";
-import FormContainer from "../components/FormContainer";
 
-const PlaceOrderScreen = () => {
+
+const PlaceOrderScreen = ({history}) => {
 
     const dispatch = useDispatch()
 
     const cart = useSelector((state => state.cart))
 
-    //calc price
-    cart.itemsPrice = cart.cartItems.reduce ((acc,i) => acc + i.price * i.qty, 0)
+    const orderCreate = useSelector(state => state.orderCreate)
+    const {order, success, error} = orderCreate
 
-    //rounded
-   const rounded = number => number.toFixed(2);
+    useEffect(()=> {
+        if(success) {
+            history.push(`/order/${order._id}`)
+        }
+
+    },[history, success])
+
+    //rounded for total of sum and multiply of products
+   const rounded = number => {
+        return parseFloat(number).toFixed(2);
+   }
+
+    //calc price
+    cart.itemsPrice = cart.cartItems.reduce((acc,i) => acc + i.price * i.qty, 0)
 
     cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100
-    cart.taxPrice = rounded(Number((0.2 * cart.itemsPrice)))
-    cart.totalPrice = Number(cart.taxPrice) + Number(cart.itemsPrice)
+    cart.taxPrice = rounded(0.2 * cart.itemsPrice)
+    cart.totalPrice = rounded(Number(cart.itemsPrice) + Number(cart.taxPrice))
+
 
     const placeOrderHandler = () => {
-        console.log('ordrer')
+       dispatch(createOrder({
+           orderItems: cart.cartItems,
+           shippingAddress: cart.shippingAddress,
+           paymentMethod: cart.paymentMethod,
+           itemsPrice: cart.itemsPrice,
+           shippingPrice: cart.shippingPrice,
+           taxPrice: cart.taxPrice,
+           totalPrice: cart.totalPrice
+       }))
     }
 
     return (
@@ -91,7 +112,7 @@ const PlaceOrderScreen = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${rounded(cart.itemsPrice)}</Col>
+                                    <Col>${cart.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
 
@@ -117,6 +138,10 @@ const PlaceOrderScreen = () => {
                             </ListGroup.Item>
 
                             <ListGroup.Item>
+                                {error && <Message variant='danger'> {error}</Message>}
+                            </ListGroup.Item>
+
+                            <ListGroup.Item>
                                 <Button type = "button"
                                         className="btn-block"
                                         disabled={cart.cartItems === 0}
@@ -125,7 +150,6 @@ const PlaceOrderScreen = () => {
                                     PlaceOrder
                                 </Button>
                             </ListGroup.Item>
-
 
                         </ListGroup>
                     </Card>

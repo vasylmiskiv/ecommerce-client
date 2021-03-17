@@ -14,13 +14,14 @@ dotenv.config()
 
  connectDB()
 
+//import all data in DB
  const importData = async () => {
      try {
         await Order.deleteMany()
         await Product.deleteMany()
         await User.deleteMany()
 
-        //пушим в БД обьект юзерс с нашими юзерами
+       //push users on  Schema ib DB
         const createdUser = await User.insertMany(users)
         
         // создали админа с 0 айди 
@@ -31,7 +32,7 @@ dotenv.config()
             return {...product, user: adminUser}
         })
 
-        // мы пушим в наш БД всю инфу с переменной продуктс
+         //push products on  Schema ib DB
         await Product.insertMany(sampleProducts)
         console.log('Data imported')
 
@@ -43,6 +44,7 @@ dotenv.config()
      }
  }
 
+// Destroy all data in DB
  const destroyData = async () =>{
     try {
        await Order.deleteMany()
@@ -51,8 +53,8 @@ dotenv.config()
        console.log('Data destroyed')
        // выходит с программы
        process.exit()
-    } catch (erorr) {
-       console.error(error.red)
+    } catch (error) {
+       console.error(error)
        process.exit(1)
     }
 }
