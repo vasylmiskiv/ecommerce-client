@@ -85,7 +85,7 @@ history.push(`/cart/${match.params.id}?qty=${qty}`)
                         {product.countInStock > 0 && (
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Qty</Col>
+                                    <Col>Quantity:</Col>
                                     <Col>
                                         <Form.Control size = "sm" as = "select" value ={qty} onChange = {(e)=>
                                             setQty(e.target.value)}>

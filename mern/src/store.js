@@ -48,7 +48,6 @@ const initialState = {
           cartItems: cartItemsFromStorage,
           shippingAddress: shippingAddressFromStorage,
           paymentMethod: paymentMethodFromStorage,
-          // orderCreate: ordersFromStorage
      },
      userLogin: {userInfo: userInfoFromStorage}
 }

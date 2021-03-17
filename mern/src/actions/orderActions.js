@@ -8,6 +8,7 @@ import {
 } from '../constants/orderConstants'
 import axios from "axios";
 
+//post our data orders
 export const  createOrder = (order) => async(dispatch, getState) => {
 
     try {
@@ -15,8 +16,10 @@ export const  createOrder = (order) => async(dispatch, getState) => {
             type: ORDER_CREATE_REQUEST
         })
 
+        //get user info from userlogin
         const { userLogin: { userInfo } } = getState()
 
+        //checking token
         const config = {
             headers: {
                 'Content-Type' : 'application/json',
@@ -24,8 +27,8 @@ export const  createOrder = (order) => async(dispatch, getState) => {
             }
         }
 
-        // change data
-        const {data} = await axios.post(`/api/orders`, order, config)
+        // post data
+        const { data } = await axios.post(`/api/orders`, order, config)
 
         dispatch({
             type: ORDER_CREATE_SUCCESS,
@@ -41,7 +44,7 @@ export const  createOrder = (order) => async(dispatch, getState) => {
 }
 
 
-
+//get our data orders
 export const  getOrderDetails = (id) => async(dispatch, getState) => {
 
     try {
