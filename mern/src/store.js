@@ -11,7 +11,7 @@ import { userLoginReducer,
 
 } from './reducers/userReducers.js'
 
-import {orderCreateReducer} from './reducers/orderReducers'
+import {orderCreateReducer, orderDetailsReducer} from './reducers/orderReducers'
 
 const reducer = combineReducers({
      productList: productListReducer,
@@ -21,7 +21,8 @@ const reducer = combineReducers({
      userRegister: userRegisterReducer,
      userDetails: userDetailsReducer,
      userUpdateProfile: userUpdateProfileReducer,
-     orderCreate: orderCreateReducer
+     orderCreate: orderCreateReducer,
+    orderDetails: orderDetailsReducer
 })
 
 // получаем items из локал сторедж для товаров
@@ -40,9 +41,6 @@ const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
     ? JSON.parse(localStorage.getItem('paymentMethod')) : {}
 
-    //get from local storage
-// const ordersFromStorage = localStorage.getItem('orderCreate')
-//     ? JSON.parse(localStorage.getItem('orderCreate')) : {}
 
 // origin state
 const initialState = {
