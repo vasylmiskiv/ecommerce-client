@@ -26,7 +26,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.18",
     "react-bootstrap-icons": "^1.4.0",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "react-paypal-button-v2": "^2.6.3"
   },
   "devDependencies": {
     "colors": "^1.4.0",
