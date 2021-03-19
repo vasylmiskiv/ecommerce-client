@@ -4,17 +4,18 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk';
 import { cartReducer } from './reducers/cartReducers';
 import { productListReducer, productDetailsReducer } from './reducers/productReducers'
-import { userLoginReducer,
+import { 
+     userLoginReducer,
      userRegisterReducer,
      userDetailsReducer,
      userUpdateProfileReducer
-
 } from './reducers/userReducers.js'
 
 import {
      orderCreateReducer,
      orderDetailsReducer,
-     orderPayReducer
+     orderPayReducer,
+     orderListMyReducer
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
@@ -27,14 +28,13 @@ const reducer = combineReducers({
      userUpdateProfile: userUpdateProfileReducer,
      orderCreate: orderCreateReducer,
      orderDetails: orderDetailsReducer,
-     orderPay: orderPayReducer
+     orderPay: orderPayReducer,
+     orderListMy: orderListMyReducer,
 })
 
-// получаем items из локал сторедж для товаров
 const cartItemsFromStorage = localStorage.getItem('cartItems') 
 ? JSON.parse(localStorage.getItem('cartItems')) : []
 
-// получаем items из localstorage для юзеров
 const userInfoFromStorage = localStorage.getItem('userInfo')
 ? JSON.parse(localStorage.getItem('userInfo')) : null
 
@@ -46,8 +46,6 @@ const shippingAddressFromStorage = localStorage.getItem('shippingAddress')
 const paymentMethodFromStorage = localStorage.getItem('paymentMethod')
     ? JSON.parse(localStorage.getItem('paymentMethod')) : {}
 
-
-// origin state
 const initialState = {
      cart: {
           cartItems: cartItemsFromStorage,

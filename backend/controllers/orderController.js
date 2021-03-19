@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import Order from '../models/orderModel.js'
 
 //Create new order
+
 // POST API orders
 //fetch all products
 const addOrderItems= asyncHandler(async(req,res) => {
@@ -21,7 +22,7 @@ const addOrderItems= asyncHandler(async(req,res) => {
     } else {
         const order = new Order({
             orderItems,
-            user: req.user,
+            user: req.user._id,
             shippingAddress,
             paymentMethod, 
             itemsPrice, 
@@ -73,4 +74,12 @@ const updateOrderToPaid = asyncHandler(async(req,res) => {
     }
 })
 
-export {addOrderItems, getOrderById, updateOrderToPaid}
+
+//get logged in user orders
+//get api/orders/myorders
+const getMyOrders = asyncHandler(async(req,res) => {
+    const orders = await (await Order.find({user: req.user._id}))
+    res.json(orders)
+})
+
+export {addOrderItems, getOrderById, updateOrderToPaid, getMyOrders}

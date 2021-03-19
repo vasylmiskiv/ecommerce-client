@@ -41,7 +41,10 @@ const PaymentScreen= ({history}) => {
                                 name = "paymentMethod"
                                 value = "PayPal"
                                 checked
-                                onChange={e => setPaymentMethod(e.target.value)}>
+                                onChange={e => {
+                                    e.preventDefault()
+                                    setPaymentMethod(e.target.value)} 
+                                    }>
                     </Form.Check>
 
                     <Form.Check type = "radio"
@@ -49,7 +52,10 @@ const PaymentScreen= ({history}) => {
                                 id = "Stripe"
                                 name = "paymentMethod"
                                 value = "Stripe"
-                                onChange={e => setPaymentMethod(e.target.value)}>
+                                onChange={e => {
+                                    e.preventDefault()
+                                    setPaymentMethod(e.target.value)} 
+                                    }>
                     </Form.Check>
                 </Col>
                 </Form.Group>

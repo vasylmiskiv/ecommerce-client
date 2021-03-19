@@ -16,7 +16,7 @@ const app = new express()
 
 app.use(express.json())
 
-// функции апи
+// api
 app.get('/', (req,res)=> {
   res.send('API is running')  
 })
@@ -33,7 +33,7 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, console.log(`Server started! :${PORT}`.yellow.bold))
+app.listen(PORT, console.log(`Server started! :${PORT}`.yellow.italic))
 
 
 

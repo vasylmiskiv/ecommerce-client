@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserDetails, updateUserProfile} from "../actions/userActions";
+import {LinkContainer} from 'react-router-bootstrap'
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import {Button, Col, Form, Row} from "react-bootstrap";
+import {Button, Col, Form, Row, Table} from "react-bootstrap";
+import {getUserDetails, updateUserProfile} from "../actions/userActions";
+import {listMyOrders} from "../actions/orderActions";
 
 
 const ProfileScreen = ({ history }) => {
@@ -16,7 +18,7 @@ const ProfileScreen = ({ history }) => {
     const dispatch = useDispatch()
 
     const userDetails = useSelector(state => state.userDetails)
-    //забираем обьекты со стейта
+
     const {loading, error, user} = userDetails
 
     const userLogin = useSelector(state => state.userLogin)
@@ -25,6 +27,8 @@ const ProfileScreen = ({ history }) => {
     const userUpdateProfile = useSelector(state => state.userUpdateProfile)
     const { success } = userUpdateProfile
 
+    const orderListMy = useSelector(state => state.orderListMy)
+    const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
         useEffect(()=>{
             if(!userInfo) {
@@ -32,13 +36,14 @@ const ProfileScreen = ({ history }) => {
             } else {
                 if(!user.name) {
                     dispatch(getUserDetails('profile'))
-                    //console.log('getUserDetails')
+                    dispatch(listMyOrders())
                 } else {
                     setName(user.name)
                     setEmail(user.email)
                 }
             }
         },[userInfo, user, dispatch, history])
+
 
     const sumbitHandler = (e) => {
         e.preventDefault()
@@ -49,7 +54,7 @@ const ProfileScreen = ({ history }) => {
         }
     }
 
-    //console.log(success)
+ console.log(orders)
 
     return <Row>
             <Col md ={5}>
@@ -111,7 +116,43 @@ const ProfileScreen = ({ history }) => {
             </Col>
             <Col md ={7}>
                 <h2>My orders</h2>
+                {loadingOrders ? <Loader /> : errorOrders ? <Message variant="danger">
+                    {error.Orders}
+                </Message> : (
+                <Table size="sm"  striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Paid</th>
+                            <th>Delivered</th>
+                            <ht></ht>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {orders.map(order=>(
+                            <tr>
+                                <td>{order._id}</td>
+                                <td>{order.createdAt.substring(0, 10)}</td>
+                                <td>{order.totalPrice}</td>
+                                <td>{order.isPaid ? order.paidAt.substring(0, 10): (
+                                    <i className = "fas fa-times" style = {{color: 'red'}}></i>
+                                )}</td>
+                                <td>{order.isDelivered ? order.deliveredAt.substring(0, 10): (
+                                    <i className = "fas fa-times" style = {{color: 'red'}}></i>
+                                )}</td>
+                                <td>
+                                    <LinkContainer to = {`/order/${order._id}`}>
+                                        <Button className = "btn-sm" variant = "light">Details</Button>
+                                    </LinkContainer>
+                                </td>
+                            </tr>
 
+                        ))}
+                    </tbody>
+                </Table>)
+                }
             </Col>
 
         </Row>

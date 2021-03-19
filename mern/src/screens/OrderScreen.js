@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
-import {Form, Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
+import {Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import {getOrderDetails, payOrder} from "../actions/orderActions"
 import axios from "axios";
@@ -95,7 +95,7 @@ const OrderScreen = ({ match }) => {
 
                             <p>
                                 <div>
-                                    {order.isPaid ? <Message variant = "success"> Has been paid  </Message>:
+                                    {order.isPaid ? <Message variant = "success"> Has been paid {order.paidAt} </Message>:
                                         <Message variant = "primary"> Have not paid yet</Message>}
                                 </div>
 

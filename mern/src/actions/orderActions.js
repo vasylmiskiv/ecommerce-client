@@ -4,7 +4,12 @@ import {
     ORDER_CREATE_FAIL,
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
-    ORDER_DETAILS_FAIL, ORDER_PAY_SUCCESS, ORDER_PAY_REQUEST, ORDER_PAY_FAIL
+    ORDER_DETAILS_FAIL,
+    ORDER_PAY_SUCCESS,
+    ORDER_PAY_REQUEST,
+    ORDER_PAY_FAIL,
+    ORDER_LIST_MY_REQUEST,
+    ORDER_LIST_MY_SUCCESS, ORDER_LIST_MY_FAIL
 } from '../constants/orderConstants'
 import axios from "axios";
 
@@ -78,7 +83,7 @@ export const  getOrderDetails = (id) => async(dispatch, getState) => {
 
 
 //Action pay order
-export const  payOrder = (orderId, payment) => async(dispatch, getState) => {
+export const  payOrder = (orderId, paymentResult) => async(dispatch, getState) => {
 
     try {
         dispatch({
@@ -95,7 +100,7 @@ export const  payOrder = (orderId, payment) => async(dispatch, getState) => {
         }
 
         // change data in db
-        const {data} = await axios.put(`/api/orders/${orderId}/pay`,payment, config)
+        const {data} = await axios.put(`/api/orders/${orderId}/pay`,paymentResult, config)
 
         dispatch({
             type: ORDER_PAY_SUCCESS,
@@ -104,6 +109,40 @@ export const  payOrder = (orderId, payment) => async(dispatch, getState) => {
     } catch (error) {
         dispatch({
             type: ORDER_PAY_FAIL,
+            payload: error.response &&
+            error.response.data.message ? error.response.data.message : error.message
+        })
+    }
+}
+
+
+//
+export const  listMyOrders = () => async(dispatch, getState) => {
+
+    try {
+        dispatch({
+            type: ORDER_LIST_MY_REQUEST
+        })
+
+        const { userLogin: { userInfo } } = getState()
+
+        //for middleware 
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        // get
+        const { data } = await axios.get(`/api/orders/myorders`, config)
+
+        dispatch({
+            type: ORDER_LIST_MY_SUCCESS,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: ORDER_LIST_MY_FAIL,
             payload: error.response &&
             error.response.data.message ? error.response.data.message : error.message
         })
