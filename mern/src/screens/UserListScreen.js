@@ -4,7 +4,8 @@ import {Table,Button} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import Message from "../components/Message"
-import {listUsers} from '../actions/userActions'
+import {listUsers, deleteUser} from '../actions/userActions'
+
 
 const UserListScreen = ({history}) => {
     const dispatch = useDispatch()
@@ -14,20 +15,26 @@ const UserListScreen = ({history}) => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
+    const userDelete= useSelector(state => state.userDelete)
+    const { success } = userDelete
+   
+
     useEffect(()=>{
-        if(userInfo && userInfo.isAdmin) {
+        if(userInfo && userInfo.isAdmin || success) {
             dispatch(listUsers())
         } else {
             history.push('/login')
         }
         
-    }, [dispatch, history])
+    }, [dispatch, history, success])
 
     const deleleteHandler = (id) => {
-        console.log('del')
+        if(window.confirm('Do u confirm it?')){
+            dispatch(deleteUser(id))
+        }
     }
 
-    console.log(typeof users)
+    const button = document.getElementsByClassName
 
     return (
         <>
@@ -48,7 +55,9 @@ const UserListScreen = ({history}) => {
                         {users.map(user => (
                             <tr key = {user._id}>
                                <td>{user._id}</td> 
-                               <td>{user.name}</td> 
+                               {
+                                   user.isAdmin ? <td><p style = {{color:'red'}}>{user.name} </p></td> : <td>{user.name}</td>
+                               }
                                <td><a href = {`mailto: ${user.email}`}>{user.email}</a></td> 
                                <td>{user.isAdmin ? (<i className = "fas fa-check" style = {{color: 'green'}}></i>): (
                                    <i className = "fas fa-times" style = {{color: 'red'}}></i>
@@ -59,18 +68,26 @@ const UserListScreen = ({history}) => {
                                            <i className = "fas fa-edit"></i>
                                        </Button>
                                    </LinkContainer>
-
-                                   <Button variant = "danger" className = "btn-sm" onClick = {()=>{
-                                       deleleteHandler(user._id)
-                                   }}>
-                                       <i className = "fas fa-trash"></i>
-                                   </Button>
+                                    {
+                                        !user.isAdmin  ? (<Button variant = "danger" className = "btn-sm" onClick = {()=>{
+                                            deleleteHandler(user._id)
+                                        }}>
+                                            <i className = "fas fa-trash"></i>
+                                        </Button>) : (<Button disabled  variant = "danger" className = "btn-sm" onClick = {()=>{
+                                            deleleteHandler(user._id)
+                                        }}>
+                                            <i className = "fas fa-trash"></i>
+                                        </Button>)
+                                    }
+                                   
                                </td>
                             </tr>
                       ))}
                   </tbody>
               </Table>
+              
           )}  
+  
         </>
     )
 }
