@@ -36,7 +36,7 @@ export const login = (email, password) => async(dispatch) => {
                 'Content-Type' : 'application/json'
             }
         }
-        // отправляем даннные
+        // post data on authmiddleware
         const {data} = await axios.post(
             '/api/users/login',
             {email, password},

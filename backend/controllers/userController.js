@@ -126,11 +126,54 @@ const deleteUser = asyncHandler(async(req,res) => {
 })
 
 
+//get user by id
+//get /api/users/:id
+//ADMIN
+//select means doesnt fetch the password cause we dont need it
+const getUserById = asyncHandler(async(req,res) => { 
+    const user = await User.findById(req.params.id).select('-password')
+    if(user) {
+        res.json(user)
+    } else {
+        res.status(404)
+        throw new Error('user doesnt exists')
+    }
+})
+
+
+
+//some updates of user
+//PUT api/users/profile/:id
+//ADMIN
+const updateUser = asyncHandler(async(req,res) => {
+    const user = await User.findById(req.params.id)
+    if(user) {
+       user.name = req.body.name || user.name
+        user.email = req.body.email || user.email
+        user.isAdmin = req.body.isAdmin || user.isAdmin
+        
+        const updatedUser = await user.save()
+
+        res.json({
+            _id: updatedUser._id,
+            name: updatedUser.name,
+            email: updatedUser.email,
+            isAdmin: updatedUser.isAdmin
+        })
+
+    } else {
+        res.status(404)
+        throw new Error('user not found')
+    }
+})
+
 export {
     authUser, 
     getUserProfile, 
     registerUser, 
     updateUserProfile, 
     getUsers,
-    deleteUser
+    deleteUser,
+    getUserById,
+    updateUser
 }
