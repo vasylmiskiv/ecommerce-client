@@ -24,6 +24,10 @@ const OrderScreen = ({ match }) => {
     const orderDetails = useSelector(state => state.orderDetails)
     const {order, loading, error} = orderDetails
 
+    //getting user info from state
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
+
     const orderPay = useSelector(state => state.orderPay)
     const {loading:loadingPay, success: successPay} = orderPay
 
@@ -34,7 +38,6 @@ const OrderScreen = ({ match }) => {
             script.type = 'text/javascript'
             script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
             script.async = true
-            // console.log(script)
             script.onload = () =>{
                 setSdkReady(true)
             }
@@ -58,19 +61,21 @@ const OrderScreen = ({ match }) => {
         dispatch(payOrder(orderId, paymentResult))
     }
 
+
+
     return loading ? <Loader /> : error ? <Message variant="danger">{error}</Message>
         :  <div>
-            <h1>Order {order._id}</h1>
+            <h1>Order {order.user._id}</h1>
             <Row>
                 <Col md = {8}>
                     <ListGroup variant = 'flush'>
                         <ListGroup.Item>
                             <h2>Shipping</h2>
-                          <p>  <strong>Name: </strong> {order.user.name}</p>
+                          <p>  <strong>Name: </strong> {userInfo.name}</p>
                             <p>
                            <strong>Email: </strong>
-                                <a href={`mailto:${order.user.email}`}>
-                                 {order.user.email}
+                                <a href={`mailto:${userInfo.email}`}>
+                                 {userInfo.email}
                             </a>
                             </p>
 
@@ -149,7 +154,7 @@ const OrderScreen = ({ match }) => {
 
                             <ListGroup.Item>
                                 <Row>
-                                    <Col>Shippings</Col>
+                                    <Col>Shipping</Col>
                                     <Col>${order.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>

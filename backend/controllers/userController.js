@@ -141,7 +141,6 @@ const getUserById = asyncHandler(async(req,res) => {
 })
 
 
-
 //some updates of user
 //PUT api/users/profile/:id
 //ADMIN
@@ -150,7 +149,7 @@ const updateUser = asyncHandler(async(req,res) => {
     if(user) {
        user.name = req.body.name || user.name
         user.email = req.body.email || user.email
-        user.isAdmin = req.body.isAdmin || user.isAdmin
+        user.isAdmin = req.body.isAdmin
         
         const updatedUser = await user.save()
 
@@ -160,7 +159,7 @@ const updateUser = asyncHandler(async(req,res) => {
             email: updatedUser.email,
             isAdmin: updatedUser.isAdmin
         })
-
+        console.log(req.body.isAdmin)
     } else {
         res.status(404)
         throw new Error('user not found')

@@ -4,38 +4,54 @@ import {Form, Button} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {getUserDetails} from '../actions/userActions'
+import {getUserDetails, updateUser} from '../actions/userActions'
 import Message from "../components/Message"
-
+import {USER_UPDATE_RESET} from '../constants/userConstants'
 
 const UserEditScreen = ({match, history}) => {
     const userId = match.params.id
 
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
-    const [isAdmin, setIsAdmin] = useState('')
+    const [isAdmin, setIsAdmin] = useState(false)
 
     const dispatch = useDispatch()
 
     const userDetails = useSelector(state => state.userDetails)
-
     const {loading, error, user} = userDetails
+
+    const userUpdate = useSelector(state => state.userUpdate)
+    const {
+         loading:loadingUpdate,
+         error:errorUpdate,
+         success: successUpdate
+        } = userUpdate
 
     console.log(isAdmin)
 
     useEffect(()=>{
-        if(!user.name || user._id !== userId) {
-              dispatch(getUserDetails(userId))
+
+        if(successUpdate) {
+            history.push(`/admin/userslist`)
+            dispatch({type: USER_UPDATE_RESET})
         } else {
-            setName(user.name)
-            setEmail(user.email)
-            setIsAdmin(user.isAdmin)
+            if(!user.name || user._id !== userId) {
+                dispatch(getUserDetails(userId))
+               
+          } else {
+              setName(user.name)
+              setEmail(user.email)
+              setIsAdmin(user.isAdmin)
+          }
         }
-    },[user, userId, dispatch])
+        
+    },[user, userId, dispatch, history, successUpdate])
 
     //submit
     const submitHandler = (e) => {
         e.preventDefault()
+        dispatch(updateUser({name, email, _id:userId, isAdmin}))
+        console.log(`улетает ${isAdmin}`)
     }
 
     return (
@@ -45,6 +61,8 @@ const UserEditScreen = ({match, history}) => {
         </Link>
 <FormContainer>
         <h1>Edit user</h1>
+        {loadingUpdate ? <Loader /> : null}
+        {loadingUpdate ? <Message vatriant = 'danger' >{errorUpdate}</Message> : null}
         {loading ? <Loader/> : error ? <Message variant ="danger">{error}</Message> : (
             <Form onSubmit = {submitHandler}>
 
