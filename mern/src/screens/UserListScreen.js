@@ -34,8 +34,6 @@ const UserListScreen = ({history}) => {
         }
     }
 
-    const button = document.getElementsByClassName
-
     return (
         <>
           <h1>Users</h1>
@@ -48,7 +46,7 @@ const UserListScreen = ({history}) => {
                           <th>NAME</th>
                           <th>EMAIL</th>
                           <th>ADMIN</th>
-                          <th></th>
+                          <th>TOOLS</th>
                       </tr>
                   </thead>
                   <tbody>

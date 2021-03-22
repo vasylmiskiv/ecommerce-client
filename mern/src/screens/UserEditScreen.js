@@ -51,7 +51,6 @@ const UserEditScreen = ({match, history}) => {
     const submitHandler = (e) => {
         e.preventDefault()
         dispatch(updateUser({name, email, _id:userId, isAdmin}))
-        console.log(`улетает ${isAdmin}`)
     }
 
     return (
@@ -61,8 +60,8 @@ const UserEditScreen = ({match, history}) => {
         </Link>
 <FormContainer>
         <h1>Edit user</h1>
-        {loadingUpdate ? <Loader /> : null}
-        {loadingUpdate ? <Message vatriant = 'danger' >{errorUpdate}</Message> : null}
+        {loadingUpdate && <Loader />}
+        {loadingUpdate && <Message vatriant = 'danger' >{errorUpdate}</Message>}
         {loading ? <Loader/> : error ? <Message variant ="danger">{error}</Message> : (
             <Form onSubmit = {submitHandler}>
 
