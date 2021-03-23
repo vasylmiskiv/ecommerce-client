@@ -18,8 +18,8 @@ import ProductListScreen from './screens/ProductListScreen'
 
 const App = () => {
  
-  return (
-    <Router>
+  return(
+   <Router>
 
       <Header/>
       
@@ -44,7 +44,7 @@ const App = () => {
       <Footer/>
 
     </Router>
-  );
+ )
 }
 
 export default App;

@@ -20,7 +20,7 @@ const UserListScreen = ({history}) => {
    
 
     useEffect(()=>{
-        if(userInfo && userInfo.isAdmin || success) {
+        if(userInfo.isAdmin) {
             dispatch(listUsers())
         } else {
             history.push('/login')
@@ -39,7 +39,7 @@ const UserListScreen = ({history}) => {
           <h1>Users</h1>
           {loading ? <Loader/> : error ? <Message variant = "danger">{error}</Message>
           : (
-              <Table striped bordered hover responsive className = "table-sm">
+              <Table triped bordered hover variant="dark"  responsive className = "table-sm">
                   <thead>
                       <tr>
                           <th>ID</th>
@@ -61,17 +61,19 @@ const UserListScreen = ({history}) => {
                                    <i className = "fas fa-times" style = {{color: 'red'}}></i>
                                ) }</td> 
                                <td>
-                                   <LinkContainer to = {`user/${user._id}/edit`}>
-                                       <Button variant = "light" className = "btn-sm">
-                                           <i className = "fas fa-edit"></i>
-                                       </Button>
-                                   </LinkContainer>
+                                   
+                                    <LinkContainer to = {`user/${user._id}/edit`}>
+                                        <Button variant = "light" className = "btn-sm">
+                                            <i className = "fas fa-edit"></i>
+                                        </Button>
+                                    </LinkContainer>
                                     {
                                         !user.isAdmin  ? (<Button variant = "danger" className = "btn-sm" onClick = {()=>{
                                             deleleteHandler(user._id)
                                         }}>
                                             <i className = "fas fa-trash"></i>
-                                        </Button>) : (<Button disabled  variant = "danger" className = "btn-sm" onClick = {()=>{
+                                        </Button>) 
+                                        : (<Button disabled  variant = "danger" className = "btn-sm" onClick = {()=>{
                                             deleleteHandler(user._id)
                                         }}>
                                             <i className = "fas fa-trash"></i>

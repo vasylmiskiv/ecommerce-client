@@ -4,7 +4,8 @@ import {Table,Button, Row, Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import Message from "../components/Message"
-import {listProducts} from '../actions/productActions'
+import {listProducts, deleteProduct} from '../actions/productActions'
+
 
 const ProductListScreen = ({history, match}) => {
     const dispatch = useDispatch()
@@ -15,18 +16,21 @@ const ProductListScreen = ({history, match}) => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin   
 
+    const productDelete = useSelector(state => state.productDelete)
+    const { success, loading:loadingDelete, error:errorDelete, product:deletedProduct } = productDelete 
+
     useEffect(()=>{
-        if(userInfo && userInfo.isAdmin) {
+        if(userInfo.isAdmin) {
             dispatch(listProducts())
         } else {
             history.push('/login')
         }
         
-    }, [dispatch, history])
+    }, [dispatch, history, success])
 
     const deleleteHandler = (id) => {
         if(window.confirm('Do u confirm it?')){
-            //delete product
+            dispatch(deleteProduct(id))
         }
     }
 
@@ -47,9 +51,12 @@ const ProductListScreen = ({history, match}) => {
             </Col>
         </Row>
           <h1>Users</h1>
+          {loadingDelete && (<Loader/>) }
+          {errorDelete && (<Message variant = "danger">{errorDelete}</Message>) }
+          {success && (<Message variant = "primary">{deletedProduct.message}</Message>) }
           {loading ? <Loader/> : error ? <Message variant = "danger">{error}</Message>
           : (
-              <Table striped bordered hover responsive className = "table-sm">
+              <Table striped bordered hover variant="dark" responsive className = "table-sm">
                   <thead>
                       <tr>
                           <th>ID</th>
@@ -80,6 +87,7 @@ const ProductListScreen = ({history, match}) => {
                                            <i className = "fas fa-edit"></i>
                                        </Button>
                                    </LinkContainer>
+                
                                     <Button variant = "danger" className = "btn-sm" onClick = {()=>{
                                             deleleteHandler(product._id)
                                         }}>

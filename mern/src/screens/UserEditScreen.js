@@ -50,18 +50,18 @@ const UserEditScreen = ({match, history}) => {
     //submit
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(updateUser({name, email, _id:userId, isAdmin}))
+        dispatch(updateUser({name, email, _id:userId, isAdmin})) 
     }
 
     return (
         <>
-        <Link to = '/admin/userlist' className = 'btn btn-light my-3'>
+        <Link to = '/admin/userslist' className = 'btn btn-light my-3'>
             Go back
         </Link>
 <FormContainer>
         <h1>Edit user</h1>
         {loadingUpdate && <Loader />}
-        {loadingUpdate && <Message vatriant = 'danger' >{errorUpdate}</Message>}
+        {errorUpdate && <Message variant = 'danger' >{errorUpdate}</Message>}
         {loading ? <Loader/> : error ? <Message variant ="danger">{error}</Message> : (
             <Form onSubmit = {submitHandler}>
 
@@ -98,7 +98,7 @@ const UserEditScreen = ({match, history}) => {
     </Form.Check>
 </Form.Group>
 
-<Button type = "submit" variant="outline-primary">
+<Button type = "submit" variant="success">
     Update
 </Button>
 </Form>

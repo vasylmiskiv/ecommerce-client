@@ -5,10 +5,10 @@ const Footer = () => {
     return (
         <div>
              <footer>
-                    <Container>
+                    <Container >
                         <Row>
                             <Col className = 'text-center py-3'>
-                                   
+                                   Copyright
                             </Col>
                         </Row>
                     </Container>   

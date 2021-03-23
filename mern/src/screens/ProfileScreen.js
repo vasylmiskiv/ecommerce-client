@@ -108,7 +108,7 @@ const ProfileScreen = ({ history }) => {
                         </Form.Control>
                     </Form.Group>
 
-                    <Button type = "submit" variant="outline-primary">
+                    <Button type = "submit" variant="success">
                         Update
                     </Button>
                 </Form>
@@ -119,7 +119,7 @@ const ProfileScreen = ({ history }) => {
                 {loadingOrders ? <Loader /> : errorOrders ? <Message variant="danger">
                     {error.Orders}
                 </Message> : (
-                <Table size="sm"  striped bordered hover>
+                <Table size="sm" responsive striped bordered hover>
                     <thead>
                         <tr>
                             <th>Id</th>
@@ -127,7 +127,7 @@ const ProfileScreen = ({ history }) => {
                             <th>Total</th>
                             <th>Paid</th>
                             <th>Delivered</th>
-                            <ht></ht>
+                            <th>Review</th>
                         </tr>
                     </thead>
                     <tbody>
