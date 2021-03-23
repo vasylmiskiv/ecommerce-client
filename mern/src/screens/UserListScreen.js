@@ -15,7 +15,7 @@ const UserListScreen = ({history}) => {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    const userDelete= useSelector(state => state.userDelete)
+    const userDelete = useSelector(state => state.userDelete)
     const { success } = userDelete
    
 
@@ -26,7 +26,7 @@ const UserListScreen = ({history}) => {
             history.push('/login')
         }
         
-    }, [dispatch, history, success])
+    }, [dispatch, history, success, userInfo])
 
     const deleleteHandler = (id) => {
         if(window.confirm('Do u confirm it?')){

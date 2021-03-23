@@ -22,7 +22,7 @@ const PlaceOrderScreen = ({history}) => {
             history.push(`/order/${order._id}`)
         }
 
-    },[history, success])
+    },[history, success, order])
 
     //rounded for total of sum and multiply of products
    const rounded = number => {

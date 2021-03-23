@@ -4,7 +4,8 @@ import {Table,Button, Row, Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import Message from "../components/Message"
-import {listProducts, deleteProduct} from '../actions/productActions'
+import {listProducts, deleteProduct, createProduct} from '../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 
 const ProductListScreen = ({history, match}) => {
@@ -17,16 +18,29 @@ const ProductListScreen = ({history, match}) => {
     const { userInfo } = userLogin   
 
     const productDelete = useSelector(state => state.productDelete)
-    const { success, loading:loadingDelete, error:errorDelete, product:deletedProduct } = productDelete 
+    const { success: successDelete, loading: loadingDelete, error: errorDelete, product: deletedProduct } = productDelete 
 
-    useEffect(()=>{
-        if(userInfo.isAdmin) {
-            dispatch(listProducts())
-        } else {
+    const productCreate = useSelector(state => state.productCreate)
+    const { success: successCreate, loading: loadingCreate, error: errorCreate, product: createdProduct } = productCreate 
+
+    useEffect(() => {
+        dispatch({type:PRODUCT_CREATE_RESET})
+        if(!userInfo.isAdmin) {
             history.push('/login')
+        } 
+        if(successCreate) {
+            history.push(`admin/product/${createdProduct._id}/edit`)
+        } else {
+            dispatch(listProducts())
         }
-        
-    }, [dispatch, history, success])
+    }, [
+        dispatch,
+        userInfo,
+        history,
+        successDelete,
+        successCreate,
+        createdProduct
+    ])
 
     const deleleteHandler = (id) => {
         if(window.confirm('Do u confirm it?')){
@@ -35,9 +49,10 @@ const ProductListScreen = ({history, match}) => {
     }
 
     const createProductHandler = () => {
-        console.log('create')
+        dispatch(createProduct())
     }
 
+    console.log(createdProduct)
     return (
         <>
         <Row className = "align-items-center">
@@ -51,9 +66,13 @@ const ProductListScreen = ({history, match}) => {
             </Col>
         </Row>
           <h1>Users</h1>
-          {loadingDelete && (<Loader/>) }
+
+          {loadingDelete && loadingCreate && (<Loader/>) }
           {errorDelete && (<Message variant = "danger">{errorDelete}</Message>) }
-          {success && (<Message variant = "primary">{deletedProduct.message}</Message>) }
+          {successDelete && (<Message variant = "primary">{deletedProduct.message}</Message>)}
+
+          {errorCreate && (<Message variant = "danger">{errorCreate}</Message>) }
+          {successCreate && (<Message variant = "primary">{createdProduct.message}</Message>)}
           {loading ? <Loader/> : error ? <Message variant = "danger">{error}</Message>
           : (
               <Table striped bordered hover variant="dark" responsive className = "table-sm">
