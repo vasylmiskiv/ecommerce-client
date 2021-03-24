@@ -42,13 +42,13 @@ const deleteProduct = asyncHandler(async(req, res) => {
 const createProduct = asyncHandler(async(req, res) => {
    const product = new Product ({
        name: 'HOCO C12 Smart Dual USB Micro Cable',
-       price: 0,
+       price: 9.99,
        user: req.user._id,
        image: '/images/charger.jpg',
        brand: 'Sample brand',
        category: 'sample category',
-       countInStock: 0,
-       numReviews: 0,
+       countInStock: 2,
+       numReviews: 1,
        description: 'Sample description'
    })
    

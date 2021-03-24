@@ -29,7 +29,7 @@ const ProductListScreen = ({history, match}) => {
             history.push('/login')
         } 
         if(successCreate) {
-            history.push(`admin/product/${createdProduct._id}/edit`)
+            history.push(`product/${createdProduct._id}/edit`)
         } else {
             dispatch(listProducts())
         }
@@ -65,7 +65,6 @@ const ProductListScreen = ({history, match}) => {
                 </Button>
             </Col>
         </Row>
-          <h1>Users</h1>
 
           {loadingDelete && loadingCreate && (<Loader/>) }
           {errorDelete && (<Message variant = "danger">{errorDelete}</Message>) }
