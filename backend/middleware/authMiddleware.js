@@ -6,7 +6,7 @@ import User from '../models/userModel.js'
 //protect by jwt
 const protect = asyncHandler(async (req, res, next) => {
     let token 
-    console.log(req.headers.authorization)
+   
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         try {
             token = req.headers.authorization.split(' ')[1]
@@ -15,7 +15,7 @@ const protect = asyncHandler(async (req, res, next) => {
             //console.log(decoded)
             next()
         } catch (error) {
-            console.error(error)
+           
             res.status(401)
             throw new Error ('Not auth cause token failed')
         }

@@ -4,8 +4,9 @@ import {Form, Button} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import {listProducts, listProductDetails} from '../actions/productActions'
+import { listProductDetails, updateProduct } from '../actions/productActions'
 import Message from "../components/Message"
+import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 
 const ProductEditScreen = ({match, history}) => {
     const productId = match.params.id
@@ -23,10 +24,17 @@ const ProductEditScreen = ({match, history}) => {
     const productDetails = useSelector(state => state.productDetails)
     const {loading, error, product} = productDetails
 
+    const productUpdate = useSelector(state => state.productUpdate)
+    const {loading: loadingUpdate, error: errorUpdate, success: successUpdate} = productUpdate
+
     useEffect(()=>{
+
+        if(successUpdate) {
+            dispatch({type: PRODUCT_UPDATE_RESET})
+            history.push('/admin/productlist')
+        } else {
             if(!product.name || product._id !== productId) {
                 dispatch(listProductDetails(productId))
-               
           } else {
               setName(product.name)
               setPrice(product.price)
@@ -36,14 +44,25 @@ const ProductEditScreen = ({match, history}) => {
               setCountInStock(product.countInStock)
               setDescription(product.description)
           }
+        }
+            
         
         
-    },[product, productId, dispatch, product])
+    },[product, productId, dispatch, successUpdate])
 
     //submit
     const submitHandler = (e) => {
-        e.preventDefault()
-       //update
+       e.preventDefault()
+       dispatch(updateProduct({
+        _id: productId,
+         name, 
+         price, 
+         brand, 
+         image, 
+         category,
+        description,
+        countInStock
+    }))
     }
 
     return (
@@ -53,10 +72,11 @@ const ProductEditScreen = ({match, history}) => {
         </Link>
 <FormContainer>
         <h1>Edit product</h1>
-      
+        {loadingUpdate && <Loader/>}
+      {errorUpdate && <Message variant ="danger">{errorUpdate}</Message>}
         {loading ? <Loader/> : error ? <Message variant ="danger">{error}</Message> : (
-            <Form onSubmit = {submitHandler}>
 
+<Form onSubmit = {submitHandler}>
 <Form.Group controlId = 'name'>
     <Form.Label>Name</Form.Label>
     <Form.Control

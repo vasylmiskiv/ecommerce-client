@@ -74,7 +74,7 @@ const ProductListScreen = ({history, match}) => {
           {successCreate && (<Message variant = "primary">{createdProduct.message}</Message>)}
           {loading ? <Loader/> : error ? <Message variant = "danger">{error}</Message>
           : (
-              <Table striped bordered hover variant="dark" responsive className = "table-sm">
+              <Table responsive striped bordered hover className = "table-sm">
                   <thead>
                       <tr>
                           <th>ID</th>
@@ -125,6 +125,5 @@ const ProductListScreen = ({history, match}) => {
         </>
     )
 }
-
 
 export default ProductListScreen

@@ -61,6 +61,7 @@ const createProduct = asyncHandler(async(req, res) => {
 //Admin
 const updateProduct = asyncHandler(async(req, res) => {
    const {
+        _id,
         name,
         price, 
         description,
@@ -70,9 +71,12 @@ const updateProduct = asyncHandler(async(req, res) => {
         countInStock
     } = req.body
     
-    const product = await Product.findById(req.params.id)
+    console.log(countInStock)
+    const product = await Product.findById(req.body._id)
+    
 
     if(product) {
+    product._id = _id,
     product.name = name
     product.price = price
     product.description = description
@@ -82,6 +86,7 @@ const updateProduct = asyncHandler(async(req, res) => {
     product.countInStock = countInStock
 
         const updatedProduct = await product.save()
+
         res.json({message:`${updatedProduct.name} has been updated`})
     } else {
        res.status(404) 
