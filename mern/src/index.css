@@ -6,15 +6,8 @@
     font-family: 'Inter', sans-serif;
 }
 
-/*   
-.bg {
-    background-image: url("https://images.unsplash.com/photo-1517819655378-25fe37197692?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1953&q=80");
-    height: 100%;
-    background-size: cover;
-  } */
-
   body {
-    background: linear-gradient( #eae8e8, #7f7f7f);
+    background: linear-gradient( #eae8e8, #a8a8a8);
   }
 
 main {
