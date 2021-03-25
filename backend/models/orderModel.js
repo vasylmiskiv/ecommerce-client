@@ -4,10 +4,10 @@ import mongoose from 'mongoose'
 const orderSchema = mongoose.Schema(
     {
     user: {
-        name: {type: String, required: true},
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'User'
+        name: {type: String, required: true},
+        email: {type: String, required: true},
+        isAdmin: {type: Boolean, required: true}
     },
         orderItems: [
             {

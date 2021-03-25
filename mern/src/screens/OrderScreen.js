@@ -99,10 +99,10 @@ const OrderScreen = ({ match }) => {
                            <p><strong>Method: </strong> {order.paymentMethod}</p>
 
                             <p>
-                                <div>
+                          
                                     {order.isPaid ? <Message variant = "success"> Has been paid {order.paidAt} </Message>:
                                         <Message variant = "primary"> Have not paid yet</Message>}
-                                </div>
+                            
 
                             </p>
                         </ListGroup.Item>

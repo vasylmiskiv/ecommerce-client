@@ -16,13 +16,16 @@ const addOrderItems= asyncHandler(async(req,res) => {
       totalPrice
     } = req.body
 
+
+    console.log(req.user + '  addOrderItems')
+
     if(orderItems && orderItems.length === 0) {
         res.status(400)
         throw new Error('No order items')
     } else {
         const order = new Order({
             orderItems,
-            user: req.user._id,
+            user: req.user.id,
             shippingAddress,
             paymentMethod, 
             itemsPrice, 
@@ -30,6 +33,7 @@ const addOrderItems= asyncHandler(async(req,res) => {
             shippingPrice,
             totalPrice
         })
+        
 
         const createdOrder = await order.save()
         res.status(201).json(createdOrder)
@@ -78,8 +82,18 @@ const updateOrderToPaid = asyncHandler(async(req,res) => {
 //get logged in user orders
 //get api/orders/myorders
 const getMyOrders = asyncHandler(async(req,res) => {
-    const orders = await (await Order.find({user: req.user._id}))
+    const orders = await (await Order.find({user: req.user}))
     res.json(orders)
 })
 
-export {addOrderItems, getOrderById, updateOrderToPaid, getMyOrders}
+//get all orders
+//get api/orders
+//Admin
+const getOrders = asyncHandler(async(req,res) => {
+    const orders = await Order.find({})
+    console.log(orders)
+    res.json(orders)
+    
+})
+
+export {addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getOrders}

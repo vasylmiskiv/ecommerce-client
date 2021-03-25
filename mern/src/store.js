@@ -24,7 +24,8 @@ import {
      orderCreateReducer,
      orderDetailsReducer,
      orderPayReducer,
-     orderListMyReducer
+     orderListMyReducer,
+     orderListReducer
 } from './reducers/orderReducers'
 
 const reducer = combineReducers({
@@ -33,10 +34,6 @@ const reducer = combineReducers({
      userRegister: userRegisterReducer,
      userDetails: userDetailsReducer,
      userUpdateProfile: userUpdateProfileReducer,
-     orderCreate: orderCreateReducer,
-     orderDetails: orderDetailsReducer,
-     orderPay: orderPayReducer,
-     orderListMy: orderListMyReducer,
      userList: userListReducer,
      userDelete: userDeleteReducer,
      userUpdate: userUpdateReducer,
@@ -44,14 +41,19 @@ const reducer = combineReducers({
      productDetails: productDetailsReducer,
      productDelete: productDeleteReducer,
      productCreate: productCreateReducer,
-     productUpdate: productUpdateReducer
+     productUpdate: productUpdateReducer,
+     orderCreate: orderCreateReducer,
+     orderDetails: orderDetailsReducer,
+     orderPay: orderPayReducer,
+     orderList: orderListReducer,
+     orderListMy: orderListMyReducer,
 })
 
 const cartItemsFromStorage = localStorage.getItem('cartItems') 
 ? JSON.parse(localStorage.getItem('cartItems')) : []
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
-? JSON.parse(localStorage.getItem('userInfo')) : null
+? JSON.parse(localStorage.getItem('userInfo')) : {}
 
 //get from localstorage items address
 const shippingAddressFromStorage = localStorage.getItem('shippingAddress')

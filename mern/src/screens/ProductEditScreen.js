@@ -50,7 +50,7 @@ const ProductEditScreen = ({match, history}) => {
             
         
         
-    },[product, productId, dispatch, successUpdate])
+    },[product, productId, dispatch, history, successUpdate])
 
     //submit
     const submitHandler = (e) => {

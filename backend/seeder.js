@@ -24,7 +24,7 @@ dotenv.config()
        //push users on  Schema ib DB
         const createdUser = await User.insertMany(users)
         
-        // создали админа с 0 айди 
+        // создали админа 
         const adminUser = createdUser[0]._id
 
         // создали переменную в которой выгружаем продуктс

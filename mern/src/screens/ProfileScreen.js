@@ -44,7 +44,6 @@ const ProfileScreen = ({ history }) => {
             }
         },[userInfo, user, dispatch, history])
 
-
     const sumbitHandler = (e) => {
         e.preventDefault()
         if(password !== confirmPassword) {
@@ -53,8 +52,6 @@ const ProfileScreen = ({ history }) => {
            dispatch(updateUserProfile({id: user._id, name, email, password}))
         }
     }
-
- console.log(orders)
 
     return <Row>
             <Col md ={5}>
@@ -132,7 +129,7 @@ const ProfileScreen = ({ history }) => {
                     </thead>
                     <tbody>
                         {orders.map(order=>(
-                            <tr>
+                            <tr key = {order._id}>
                                 <td>{order._id}</td>
                                 <td>{order.createdAt.substring(0, 10)}</td>
                                 <td>{order.totalPrice}</td>
