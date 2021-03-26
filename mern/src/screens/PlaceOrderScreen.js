@@ -17,6 +17,11 @@ const PlaceOrderScreen = ({history}) => {
     const orderCreate = useSelector(state => state.orderCreate)
     const {order, success, error} = orderCreate
 
+    const userLogin = useSelector(state =>state.userLogin)
+
+    const {userInfo} = userLogin
+    
+
     useEffect(()=> {
         if(success) {
             history.push(`/order/${order._id}`)
@@ -45,9 +50,12 @@ const PlaceOrderScreen = ({history}) => {
            itemsPrice: cart.itemsPrice,
            shippingPrice: cart.shippingPrice,
            taxPrice: cart.taxPrice,
-           totalPrice: cart.totalPrice
+           totalPrice: cart.totalPrice,
+           userId: userInfo
        }))
     }
+
+    console.log(userInfo)
 
     return (
         <>

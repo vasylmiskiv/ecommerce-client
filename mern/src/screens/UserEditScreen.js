@@ -56,7 +56,7 @@ const UserEditScreen = ({match, history}) => {
 
     return (
         <>
-        <Link to = '/admin/userslist' className = 'btn btn-light my-3'>
+        <Link to = '/admin/userslist' className = 'btn btn-primary my-3'>
             Go back
         </Link>
 <FormContainer>

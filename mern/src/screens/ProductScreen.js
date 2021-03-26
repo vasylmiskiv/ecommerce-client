@@ -32,12 +32,12 @@ history.push(`/cart/${match.params.id}?qty=${qty}`)
             {loading ? <Loader/>: error ? <Message variant = "danger">{error}</Message> :
             (
                 <Row>
-            <Col md ={5}>
-                <Image src = {product.image} alt = {product.name} fluid/>
-            </Col>
             <Col md ={4}>
-                <ListGroup variant = 'flush'>
-                    <ListGroup.Item>
+                <Image  src = {product.image} alt = {product.name} fluid/>
+            </Col>
+            <Col md ={5}>
+                <ListGroup variant = 'flush' >
+                    <ListGroup.Item > 
                         <h2>{product.name}</h2>
                     </ListGroup.Item>
                    <ListGroup.Item>
@@ -56,7 +56,7 @@ history.push(`/cart/${match.params.id}?qty=${qty}`)
             </Col>
             <Col md = {3}>
                 <Card>
-                    <ListGroup variant = 'flush'>
+                    <ListGroup variant = 'flush' >
                         <ListGroup.Item>
                             <Row>
                                 <Col>

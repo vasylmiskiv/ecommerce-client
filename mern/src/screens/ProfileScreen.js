@@ -30,6 +30,8 @@ const ProfileScreen = ({ history }) => {
     const orderListMy = useSelector(state => state.orderListMy)
     const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
+    console.log(user)
+
         useEffect(()=>{
             if(!userInfo) {
                 history.push('/login')
@@ -44,6 +46,7 @@ const ProfileScreen = ({ history }) => {
             }
         },[userInfo, user, dispatch, history])
 
+
     const sumbitHandler = (e) => {
         e.preventDefault()
         if(password !== confirmPassword) {
@@ -53,6 +56,7 @@ const ProfileScreen = ({ history }) => {
         }
     }
 
+    console.log(orders)
     return <Row>
             <Col md ={5}>
                 <h1>User Profile</h1>
@@ -114,12 +118,12 @@ const ProfileScreen = ({ history }) => {
             <Col md ={7}>
                 <h2>My orders</h2>
                 {loadingOrders ? <Loader /> : errorOrders ? <Message variant="danger">
-                    {error.Orders}
+                    {errorOrders}
                 </Message> : (
                 <Table size="sm" responsive striped bordered hover>
                     <thead>
                         <tr>
-                            <th>Id</th>
+                            <th>ID</th>
                             <th>Date</th>
                             <th>Total</th>
                             <th>Paid</th>

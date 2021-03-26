@@ -25,8 +25,8 @@ const OrderListScreen = ({history}) => {
         
     }, [dispatch, history, userInfo])
 
-  
     console.log(orders)
+
     return (
         <>
           <h1>Orders</h1>
@@ -50,9 +50,9 @@ const OrderListScreen = ({history}) => {
                             <tr key = {order._id}>
                                <td>{order._id}</td> 
                                {
-                                   order.user.isAdmin ? <td><p style = {{color:'red'}}>{order.user.name} </p></td> : <td>{order.user.name}</td>
+                                   order.userId.isAdmin ? <td><p style = {{color:'red'}}>{order.userId.name} </p></td> : <td>{order.userId.name}</td>
                                }
-                               {!order.user.isAdmin && order.user ? (<td><a href = {`mailto: ${order.user.email}`}>{order.user.email}</a></td>): (<td></td>)}
+                               {!order.userId.isAdmin && order.userId ? (<td><a href = {`mailto: ${order.userId.email}`}>{order.userId.email}</a></td>): (<td></td>)}
                                <td>{order.createdAt.substring(0, 10)}</td> 
                                <td>{order.totalPrice}</td> 
                                <td>

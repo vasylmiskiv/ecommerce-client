@@ -13,10 +13,11 @@ const addOrderItems= asyncHandler(async(req,res) => {
       itemsPrice, 
       taxPrice,
       shippingPrice,
-      totalPrice
+      totalPrice,
+      userId
     } = req.body
 
-
+    
     console.log(req.user + '  addOrderItems')
 
     if(orderItems && orderItems.length === 0) {
@@ -25,16 +26,16 @@ const addOrderItems= asyncHandler(async(req,res) => {
     } else {
         const order = new Order({
             orderItems,
-            user: req.user.id,
+            user: userId._id,
             shippingAddress,
             paymentMethod, 
             itemsPrice, 
             taxPrice,
             shippingPrice,
-            totalPrice
+            totalPrice,
+            userId: userId
         })
         
-
         const createdOrder = await order.save()
         res.status(201).json(createdOrder)
     }
@@ -78,11 +79,33 @@ const updateOrderToPaid = asyncHandler(async(req,res) => {
     }
 })
 
+//update order to delivered status
+//get api/orders/:id/deliver
+//Admin
+const updateOrderToDelivered = asyncHandler(async(req,res) => {
+    const order = await (await Order.findById(req.params.id))
+
+    if(order) {
+        order.isDelivered = true
+        order.deliveredAt = Date.now()
+
+    //save db
+        const updateOrder = await order.save()
+
+    res.json(updateOrder)
+
+    } else {
+        res.status(404)
+        throw Error ('Order not found')
+    }
+})
+
 
 //get logged in user orders
-//get api/orders/myorders
-const getMyOrders = asyncHandler(async(req,res) => {
-    const orders = await (await Order.find({user: req.user}))
+//get api/orders/myorders.fi
+const getMyOrders = asyncHandler(async(req, res) => {
+    const orders = await Order.find({user: req.user._id })
+    console.log(req.user)
     res.json(orders)
 })
 
@@ -91,9 +114,17 @@ const getMyOrders = asyncHandler(async(req,res) => {
 //Admin
 const getOrders = asyncHandler(async(req,res) => {
     const orders = await Order.find({})
-    console.log(orders)
+    console.log('GET ALL ORDERS')
     res.json(orders)
     
 })
 
-export {addOrderItems, getOrderById, updateOrderToPaid, getMyOrders, getOrders}
+
+export {
+    addOrderItems,
+    getOrderById,
+    updateOrderToPaid,
+    getMyOrders,
+    getOrders,
+    updateOrderToDelivered
+}
