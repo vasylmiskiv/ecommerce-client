@@ -30,7 +30,7 @@ const ProfileScreen = ({ history }) => {
     const orderListMy = useSelector(state => state.orderListMy)
     const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
-    console.log(user)
+    
 
         useEffect(()=>{
             if(!userInfo) {
@@ -56,7 +56,7 @@ const ProfileScreen = ({ history }) => {
         }
     }
 
-    console.log(orders)
+    
     return <Row>
             <Col md ={5}>
                 <h1>User Profile</h1>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
-import {Button, Row, Col, ListGroup, Image, Card, ListGroupItem} from 'react-bootstrap'
+import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import {getOrderDetails, payOrder, deliverOrder} from "../actions/orderActions"
 import axios from "axios";
@@ -66,7 +66,7 @@ const OrderScreen = ({ match, history }) => {
                 setSdkReady(true)
             }
         }
-    },[orderId, dispatch, successPay, order, successDeliver])
+    },[orderId, history, dispatch, successPay, order, successDeliver])
 
     const successPaymentHandler = (paymentResult) => {
         dispatch(payOrder(orderId, paymentResult))
