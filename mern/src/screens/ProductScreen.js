@@ -26,6 +26,7 @@ const ProductScreen = ({ match, history }) => {
    const { error:errorProductReview, success: successProductReview } = productReviewCreate
 
          useEffect(() => {
+             dispatch(listProductDetails(match.params.id))
              if(successProductReview) {
                  alert('Review submitted')
                  setComment('')
@@ -49,8 +50,6 @@ const submitHandler = (e) => {
         comment
     }))
 }
-
-console.log(product.reviews)
 
     return (
     

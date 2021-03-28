@@ -21,11 +21,11 @@ import {
     } from '../constants/productConstants'
 
 
-export const listProducts = (keyword = '') => async (dispatch) => {
+export const listProducts = (keyword = '', pageNumber = '') => async (dispatch) => {
    try {
        dispatch({type: PRODUCT_LIST_REQUEST})
-       const { data } = await axios.get(`/api/products?keyword=${keyword}`)
-       console.log(data)
+       const { data } = await axios.get(`/api/products?keyword=${keyword}&pageNumber=${pageNumber}`)
+  
        dispatch({
            type: PRODUCT_LIST_SUCCESS,
            payload: data
@@ -87,7 +87,7 @@ export const listProductDetails = (id) => async (dispatch) => {
 }
 
     //create
-    export const  createProduct = () => async(dispatch, getState) => {
+    export const  createProduct = (product) => async(dispatch, getState) => {
         try {
             dispatch({
                 type: PRODUCT_CREATE_REQUEST
@@ -100,8 +100,8 @@ export const listProductDetails = (id) => async (dispatch) => {
                 }
             }
             // create
-            const { data } = await axios.post(`/api/products`, {} , config)
-   
+            const { data } = await axios.post(`/api/products`, product, config)
+            console.log(data)
             dispatch({
                 type: PRODUCT_CREATE_SUCCESS,
                 payload: data

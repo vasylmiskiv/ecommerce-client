@@ -9,15 +9,15 @@ const Product = ({ product }) => {
     return (
          
 
-        <Card style = {{boxShadow:"3px 1px 5px #777676"}} className = 'my-3 p-3 rounded'>
+        <Card style = {{boxShadow:"1px 1px 3px #777676"}} className = 'my-3 p-3 rounded'>
             <Link to = {`/product/${product._id}`}>
                 <Card.Img  src = {product.image} variant= 'top'/>
             </Link>
 
         <Card.Body>
         <Link to = {`/product/${product._id}`}>
-                <Card.Title as = 'div' style ={{color: '#3f3f3f'}}>
-                    <strong>{product.name}</strong>
+                <Card.Title as = 'div' style ={{color: '#3f3f3f', height: "50px"}}>
+                    <div>{product.name}</div>
                 </Card.Title>
         </Link>
 

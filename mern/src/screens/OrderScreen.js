@@ -5,9 +5,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import {getOrderDetails, payOrder, deliverOrder} from "../actions/orderActions"
 import axios from "axios";
 import  {PayPalButton} from 'react-paypal-button-v2'
-import {ORDER_PAY_RESET, ORDER_DELIVER_RESET, ORDER_DETAILS_RESET} from "../constants/orderConstants"
+import {ORDER_PAY_RESET, ORDER_DELIVER_RESET,ORDER_LIST_MY_RESET,ORDER_LIST_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET} from "../constants/orderConstants"
 import {removeAllFromCart} from '../actions/cartActions'
-
 
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -40,7 +39,6 @@ const OrderScreen = ({ match, history }) => {
         if(!userInfo) {
             history.push('/login')
         }
-
         const addPayPalScript = async() => {
             const {data: clientId} = await axios.get('/api/config/paypal')
             const script = document.createElement('script')
@@ -52,12 +50,20 @@ const OrderScreen = ({ match, history }) => {
             }
             document.body.appendChild(script)
         }
-     
+
+
+        
+
         if(!order || successPay || successDeliver) {
-            dispatch({type: ORDER_DETAILS_RESET})
+            
+            dispatch({ type: ORDER_CREATE_RESET })
+            dispatch({ type: ORDER_LIST_MY_RESET })
+            dispatch({ type: ORDER_LIST_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
             dispatch({ type: ORDER_PAY_RESET })
             dispatch(getOrderDetails(orderId))
+            
+           
         } else if(!order.isPaid) {
             if(!window.paypal) {
                 dispatch(removeAllFromCart())
@@ -142,8 +148,8 @@ const OrderScreen = ({ match, history }) => {
                                                         </Link>
                                                     </Col>
                                                     <Col md = {4}>
-                                                        {item.qty} x ${item.price} = ${item.qty
-                                                        * item.price}
+                                                        {item.qty} x ${item.price} = ${Number(item.qty
+                                                        * item.price).toFixed(2)}
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>
@@ -191,7 +197,7 @@ const OrderScreen = ({ match, history }) => {
                             </ListGroup.Item>
 
                                 {!order.isPaid && (
-                                    <ListGroup.Item>
+                                    <ListGroup.Item >
                                         {loadingPay && <Loader/>}
                                         {!sdkReady ? <Loader/> : (
                                             <PayPalButton 

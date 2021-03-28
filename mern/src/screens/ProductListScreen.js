@@ -6,13 +6,16 @@ import Loader from '../components/Loader'
 import Message from "../components/Message"
 import {listProducts, deleteProduct, createProduct} from '../actions/productActions'
 import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
+import Paginate from '../components/Paginate'
 
 
 const ProductListScreen = ({history, match}) => {
+    const pageNumber = match.params.pageNumber || 1
+
     const dispatch = useDispatch()
 
     const productList = useSelector(state => state.productList)
-    const { loading, error, products } = productList
+    const { loading, error, products, page, pages } = productList
 
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin   
@@ -27,11 +30,8 @@ const ProductListScreen = ({history, match}) => {
         dispatch({type:PRODUCT_CREATE_RESET})
         if(!userInfo.isAdmin) {
             history.push('/login')
-        } 
-        if(successCreate) {
-            history.push(`product/${createdProduct._id}/edit`)
         } else {
-            dispatch(listProducts())
+            dispatch(listProducts('', pageNumber))
         }
     }, [
         dispatch,
@@ -39,7 +39,8 @@ const ProductListScreen = ({history, match}) => {
         history,
         successDelete,
         successCreate,
-        createdProduct
+        createdProduct,
+        pageNumber
     ])
 
     const deleleteHandler = (id) => {
@@ -48,11 +49,10 @@ const ProductListScreen = ({history, match}) => {
         }
     }
 
-    const createProductHandler = () => {
-        dispatch(createProduct())
-    }
+    // const createProductHandler = () => {
+    //     dispatch(createProduct())
+    // }
 
-    console.log(createdProduct)
     return (
         <>
         <Row className = "align-items-center">
@@ -60,9 +60,11 @@ const ProductListScreen = ({history, match}) => {
             <h1>Products</h1>
             </Col>
             <Col className = "text-right">
-                <Button className = "my-3" onClick = {createProductHandler}>
+            <LinkContainer to = {`/admin/product/create`}>
+                <Button className = "my-3">
                      <i className = "fas fa-plus"></i>   Create a Product
                 </Button>
+                </LinkContainer>
             </Col>
         </Row>
 
@@ -74,6 +76,7 @@ const ProductListScreen = ({history, match}) => {
           {successCreate && (<Message variant = "primary">{createdProduct.message}</Message>)}
           {loading ? <Loader/> : error ? <Message variant = "danger">{error}</Message>
           : (
+              <>
               <Table striped bordered hover responsive className = "table-sm">
                   <thead>
                       <tr>
@@ -119,7 +122,8 @@ const ProductListScreen = ({history, match}) => {
                     }
                   </tbody>
               </Table>
-              
+              <Paginate pages = {pages} page = {page} isAdmin ={true}/>
+              </>
           )}  
   
         </>

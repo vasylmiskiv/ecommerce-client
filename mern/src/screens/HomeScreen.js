@@ -5,26 +5,30 @@ import Product from '../components/Product'
 import { listProducts } from '../actions/productActions.js'
 import Loader from '../components/Loader.js'
 import Message from '../components/Message.js'
+import Paginate from '../components/Paginate.js'
 
 const HomeScreen = ({ match }) => {
+  const keyword = match.params.keyword
+
+  const pageNumber = match.params.pageNumber || 1
+
     const dispatch = useDispatch()
 
     const productList = useSelector(state => state.productList)
-    const { loading, error, products } = productList
+    const { loading, error, products, page, pages } = productList
 
-    const keyword = match.params.keyword
-
-    //like component did mount
     useEffect(()=>{
-        dispatch(listProducts(keyword))
-    }, [dispatch, keyword])
+        dispatch(listProducts(keyword, pageNumber))
+    }, [dispatch, keyword, pageNumber])
     
     return (
         <div>
             <h1>Latest products</h1>
             {loading ?<Loader /> : error ? <Message variant = 'danger'>{error}</Message>
-             : (<Row>
-                {products.length === 0 ? <Col><Message><i class="far fa-times-circle"></i> Product not found</Message></Col> : products.map((product) => (
+             : (
+             <>
+             <Row>
+                {products.length === 0 ? <Col><Message><i class="far fa-times-circle"></i> Products not found</Message></Col> : products.map((product) => (
                      <Col key = {product._id} sm = {12} md = {6} lg = {4} xl = {3}>
                     <Product product = {product}/>
                     </Col>
@@ -32,6 +36,12 @@ const HomeScreen = ({ match }) => {
                    )  
                  }
                </Row>
+               <Paginate 
+               pages = {pages}
+               page = {page}
+               keyword = {keyword ? keyword : null}
+               />
+               </>
              )
             
             }   

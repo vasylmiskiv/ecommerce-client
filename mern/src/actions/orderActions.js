@@ -5,6 +5,7 @@ import {
     ORDER_DETAILS_REQUEST,
     ORDER_DETAILS_SUCCESS,
     ORDER_DETAILS_FAIL,
+    ORDER_DETAILS_RESET,
     ORDER_PAY_SUCCESS,
     ORDER_PAY_REQUEST,
     ORDER_PAY_FAIL,
@@ -79,7 +80,8 @@ export const  getOrderDetails = (id) => async(dispatch, getState) => {
         dispatch({
             type: ORDER_DETAILS_SUCCESS,
             payload: data
-        })
+        })      
+        
     } catch (error) {
         dispatch({
             type: ORDER_DETAILS_FAIL,

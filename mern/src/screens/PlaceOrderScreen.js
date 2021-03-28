@@ -55,7 +55,7 @@ const PlaceOrderScreen = ({history}) => {
        }))
     }
 
-    console.log(userInfo)
+    // console.log(userInfo)
 
     return (
         <>
