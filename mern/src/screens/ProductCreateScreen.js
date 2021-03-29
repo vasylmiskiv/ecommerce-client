@@ -9,7 +9,7 @@ import Message from "../components/Message"
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 import axios from 'axios'
 
-const ProductEditScreen = ({history}) => {
+const ProductCreateScreen = ({history}) => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState('')
     const [image, setImage] = useState('')
@@ -181,4 +181,4 @@ const ProductEditScreen = ({history}) => {
 }
 
 
-export default ProductEditScreen
+export default ProductCreateScreen
