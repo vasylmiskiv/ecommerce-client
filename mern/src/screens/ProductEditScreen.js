@@ -1,6 +1,6 @@
 import React, {useState, useEffect}from 'react'
 import  {Link} from 'react-router-dom'
-import {Form, Button} from 'react-bootstrap'
+import {Form, Button, Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
@@ -108,16 +108,32 @@ const ProductEditScreen = ({match, history}) => {
     </Form.Control>
 </Form.Group>
 
+<Col md = {3}>
 <Form.Group controlId = 'price'>
-    <Form.Label>price</Form.Label>
+    <Form.Label>Price</Form.Label>
     <Form.Control
         type = "number"
-        placeholder = "Your price"
-        value = {price}
-        onChange = {e => setPrice(e.target.value)}
+      
+        value = {price < 0 ? 0 : price}
+        onChange = {e => setPrice(parseFloat(e.target.value))}
     >
     </Form.Control>
 </Form.Group>
+</Col>
+
+<Col md = {3}>
+<Form.Group controlId = 'count in stock'>
+
+    <Form.Label>Count in stock</Form.Label>
+    <Form.Control
+        type = "number"
+        value = {countInStock < 0 ? 0 : countInStock}
+        onChange = {e => setCountInStock(parseInt(e.target.value))}
+    >
+    </Form.Control>
+  
+</Form.Group>
+</Col>
 
 <Form.Group controlId = 'image'>
     <Form.Label>Image</Form.Label>
@@ -139,17 +155,6 @@ const ProductEditScreen = ({match, history}) => {
         placeholder = "Enter brand"
         value = {brand}
         onChange = {e => setBrand(e.target.value)}
-    >
-    </Form.Control>
-</Form.Group>
-
-<Form.Group controlId = 'count in stock'>
-    <Form.Label>Count in stock</Form.Label>
-    <Form.Control
-        type = "number"
-        placeholder = "Enter count in stock"
-        value = {countInStock}
-        onChange = {e => setCountInStock(e.target.value)}
     >
     </Form.Control>
 </Form.Group>

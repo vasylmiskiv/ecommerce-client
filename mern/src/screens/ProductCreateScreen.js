@@ -96,16 +96,32 @@ const ProductCreateScreen = ({history}) => {
     </Form.Control>
 </Form.Group>
 
+<Col md = {3}>
 <Form.Group controlId = 'price'>
     <Form.Label>Price</Form.Label>
     <Form.Control
         type = "number"
-        placeholder = "Product price"
+      
         value = {price < 0 ? 0 : price}
         onChange = {e => setPrice(parseFloat(e.target.value))}
     >
     </Form.Control>
 </Form.Group>
+</Col>
+
+<Col md = {3}>
+<Form.Group controlId = 'count in stock'>
+
+    <Form.Label>Count in stock</Form.Label>
+    <Form.Control
+        type = "number"
+        value = {countInStock < 0 ? 0 : countInStock}
+        onChange = {e => setCountInStock(parseInt(e.target.value))}
+    >
+    </Form.Control>
+  
+</Form.Group>
+</Col>
 
 <Form.Group controlId = 'image'>
     <Form.Label>Image</Form.Label>
@@ -130,21 +146,6 @@ const ProductCreateScreen = ({history}) => {
     >
     </Form.Control>
 </Form.Group>
-
-<Form.Group controlId = 'count in stock'>
-<Col md = {3}>
-    <Form.Label>Count in stock</Form.Label>
-    <Form.Control
-        type = "number"
-        placeholder = "Enter count in stock"
-        value = {countInStock < 0 ? 0 : countInStock}
-        onChange = {e => setCountInStock(parseInt(e.target.value))}
-    >
-    </Form.Control>
-    </Col>
-</Form.Group>
-
-
 
 <Form.Group controlId = 'category'>
     <Form.Label>Category</Form.Label>
