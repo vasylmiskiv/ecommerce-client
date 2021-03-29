@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 import {Button, Row, Col, ListGroup, Image, Card} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
-import {getOrderDetails, payOrder, deliverOrder} from "../actions/orderActions"
+import {getOrderDetails, payOrder, deliverOrder,listMyOrders} from "../actions/orderActions"
 import axios from "axios";
 import  {PayPalButton} from 'react-paypal-button-v2'
 import {ORDER_PAY_RESET, ORDER_DELIVER_RESET,ORDER_LIST_MY_RESET,ORDER_LIST_RESET, ORDER_CREATE_RESET, ORDER_DETAILS_RESET} from "../constants/orderConstants"
 import {removeAllFromCart} from '../actions/cartActions'
+
 
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -36,6 +37,9 @@ const OrderScreen = ({ match, history }) => {
     const {loading:loadingDeliver, success: successDeliver} = orderDeliver
 
     useEffect(()=> {
+        
+        
+        
         if(!userInfo) {
             history.push('/login')
         }
@@ -51,19 +55,14 @@ const OrderScreen = ({ match, history }) => {
             document.body.appendChild(script)
         }
 
-
-        
-
         if(!order || successPay || successDeliver) {
-            
+            dispatch(getOrderDetails(orderId))
             dispatch({ type: ORDER_CREATE_RESET })
             dispatch({ type: ORDER_LIST_MY_RESET })
             dispatch({ type: ORDER_LIST_RESET })
             dispatch({ type: ORDER_DELIVER_RESET })
             dispatch({ type: ORDER_PAY_RESET })
-            dispatch(getOrderDetails(orderId))
-            
-           
+                
         } else if(!order.isPaid) {
             if(!window.paypal) {
                 dispatch(removeAllFromCart())

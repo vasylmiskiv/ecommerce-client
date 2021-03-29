@@ -55,8 +55,6 @@ const PlaceOrderScreen = ({history}) => {
        }))
     }
 
-    // console.log(userInfo)
-
     return (
         <>
             <CheckoutSteps step1 step2 step3 step4/>

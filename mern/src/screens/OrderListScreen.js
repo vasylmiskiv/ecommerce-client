@@ -25,8 +25,6 @@ const OrderListScreen = ({history}) => {
         
     }, [dispatch, history, userInfo])
 
-    console.log(orders)
-
     return (
         <>
           <h1>Orders</h1>

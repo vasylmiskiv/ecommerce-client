@@ -77,7 +77,6 @@ const createProduct = asyncHandler(async(req, res) => {
    })
    
    const createdProduct = await product.save()
-   console.log(createdProduct)
    res.status(201).json(createdProduct)
 })
 
@@ -128,6 +127,7 @@ const createProductReview = asyncHandler(async(req, res) => {
      const product = await Product.findById(req.params.id)
 
      if(product) {
+        
 
        /* limit of reviews*/
        
@@ -137,12 +137,17 @@ const createProductReview = asyncHandler(async(req, res) => {
         //     throw new Error('Product already reviewed')
         // }
 
+        //comment validation
+        
+
         const review = {
             name: req.user.name,
             rating: Number(rating),
             comment,
             user: req.user._id
         }
+
+        console.log(comment)
 
         product.reviews.push(review)
 

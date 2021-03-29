@@ -10,6 +10,7 @@ import Meta from '../components/Meta'
 import {PRODUCT_CREATE_REVIEW_RESET} from '../constants/productConstants'
 
 
+
 const ProductScreen = ({ match, history }) => {
    const  [qty, setQty] = useState(1)
    const  [comment, setComment] = useState('')
@@ -175,12 +176,11 @@ const submitHandler = (e) => {
                                         value = {rating} 
                                         onChange = {(e)=> setRating(parseFloat(e.target.value))}
                                         >
-                                            <option value = ''>Select...</option>
-                                            <option value = "1">1</option>
-                                            <option value = "2">2</option>
-                                            <option value = "3">3</option>
-                                            <option value = "4">4</option>
-                                            <option value = "5">5</option>
+                                            <option value = "1">1 star</option>
+                                            <option value = "2">2 stars</option>
+                                            <option value = "3">3 stars</option>
+                                            <option value = "4">4 stars</option>
+                                            <option value = "5">5 stars</option>
                                         </Form.Control>
                                     </Form.Group>
                                     <Form.Group controlId = "comment">

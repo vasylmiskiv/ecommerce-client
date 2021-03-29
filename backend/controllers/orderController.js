@@ -17,9 +17,6 @@ const addOrderItems= asyncHandler(async(req,res) => {
       userId
     } = req.body
 
-    
-    console.log(req.user + '  addOrderItems')
-
     if(orderItems && orderItems.length === 0) {
         res.status(400)
         throw new Error('No order items')
@@ -53,7 +50,6 @@ const getOrderById = asyncHandler(async(req,res) => {
         throw Error ('Order not found')
      }
  })
-
 
 //get api/orders/:id/pay
 const updateOrderToPaid = asyncHandler(async(req,res) => {
@@ -100,12 +96,10 @@ const updateOrderToDelivered = asyncHandler(async(req,res) => {
     }
 })
 
-
 //get logged in user orders
 //get api/orders/myorders.fi
 const getMyOrders = asyncHandler(async(req, res) => {
     const orders = await Order.find({user: req.user._id })
-    console.log(req.user)
     res.json(orders)
 })
 
@@ -114,11 +108,8 @@ const getMyOrders = asyncHandler(async(req, res) => {
 //Admin
 const getOrders = asyncHandler(async(req,res) => {
     const orders = await Order.find({})
-    console.log('GET ALL ORDERS')
     res.json(orders)
-    
 })
-
 
 export {
     addOrderItems,

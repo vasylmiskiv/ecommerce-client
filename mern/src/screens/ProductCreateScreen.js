@@ -4,9 +4,8 @@ import {Form, Button, Col} from 'react-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
-import { listProductDetails, createProduct } from '../actions/productActions'
+import {createProduct } from '../actions/productActions'
 import Message from "../components/Message"
-import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 import axios from 'axios'
 
 const ProductCreateScreen = ({history}) => {
@@ -28,7 +27,7 @@ const ProductCreateScreen = ({history}) => {
     const {loading, error} = productDetails
 
     const productCreate = useSelector(state => state.productCreate)
-    const {loading: loadingCreate, error: errorCreate, success: successCreate, product} = productCreate
+    const {loading: loadingCreate, error: errorCreate, success: successCreate} = productCreate
 
     useEffect(()=>{
        if(successCreate) {
@@ -40,8 +39,7 @@ const ProductCreateScreen = ({history}) => {
     //submit
     const submitHandler = (e) => {
        e.preventDefault()
-       
-       console.log(typeof countInStock)
+    
        dispatch(createProduct({
          name, 
          price, 
@@ -72,7 +70,6 @@ const ProductCreateScreen = ({history}) => {
         }
     }
     
-    console.log(typeof countInStock)
     return (
         <>
         <Link to = '/admin/productlist' className = 'btn btn-light my-3'>

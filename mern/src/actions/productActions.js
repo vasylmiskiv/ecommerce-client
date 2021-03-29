@@ -104,7 +104,6 @@ export const listProductDetails = (id) => async (dispatch) => {
             }
             // create
             const { data } = await axios.post(`/api/products`, product, config)
-            console.log(data)
             dispatch({
                 type: PRODUCT_CREATE_SUCCESS,
                 payload: data
