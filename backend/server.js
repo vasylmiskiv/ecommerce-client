@@ -33,10 +33,14 @@ app.get('/api/config/paypal', (req, res)=>res.send(process.env.PAYPAL_CLIENT_ID)
 const __dirname = path.resolve()
 
 //for img
-app.use('/uploads', express.static(path.join(__dirname,'/uploads')))
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
+
+app.use(express.static(path.join(__dirname, '/mern/build')))
 //for production
-process.env.NODE_ENV === 'production' && app.use(express.static(path.join(__dirname, '/mern/build'))) && app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, 'mern', 'build', 'index.html')))
+process.env.NODE_ENV === 'production' && app.get('/', (req, res) => res.sendFile(path.resolve(__dirname, 'mern', 'build', 'index.html')))
+
+
 
 //errors
 app.use(notFound)
