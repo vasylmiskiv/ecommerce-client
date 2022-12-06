@@ -1,66 +1,63 @@
-import mongoose from 'mongoose'
-import dotenv from 'dotenv'
-// import data users, products
-import users from './data/users.js'
-import products from './data/products.js'
-// import Schemes
-import User from './models/userModel.js'
-import Product from './models/productModel.js'
-import Order from './models/orderModel.js'
-// import connect to mongodb
-import connectDB from './config/db.js'
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-dotenv.config()
+import users from "./data/users.js";
+import products from "./data/products.js";
 
- connectDB()
+import User from "./models/userModel.js";
+import Product from "./models/productModel.js";
+import Order from "./models/orderModel.js";
 
-//import all data in DB
- const importData = async () => {
-     try {
-        await Order.deleteMany()
-        await Product.deleteMany()
-        await User.deleteMany()
+import connectDB from "./config/db.js";
 
-       //push users on  Schema ib DB
-        const createdUser = await User.insertMany(users)
-        
-        // создали админа 
-        const adminUser = createdUser[0]._id
+dotenv.config();
 
-        // создали переменную в которой выгружаем продуктс
-        const sampleProducts = products.map((product) => {
-            return {...product, user: adminUser}
-        })
+connectDB();
 
-         //push products on  Schema ib DB
-        await Product.insertMany(sampleProducts)
-        console.log('Data imported')
+const importData = async () => {
+  try {
+    await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
 
-        // выходит с программы
-        process.exit()
-     } catch (error) {
-        console.error(error)
-        process.exit(1)
-     }
- }
+    const createdUser = await User.insertMany(users);
 
-// Destroy all data in DB
- const destroyData = async () =>{
-    try {
-       await Order.deleteMany()
-       await Product.deleteMany()
-       await User.deleteMany()
-       console.log('Data destroyed')
-       // выходит с программы
-       process.exit()
-    } catch (error) {
-       console.error(error)
-       process.exit(1)
-    }
-}
+    const adminUser = createdUser[0]._id;
 
-if(process.argv[2] === '-d') {
-    destroyData()
+    const sampleProducts = products.map((product) => {
+      return { ...product, user: adminUser };
+    });
+
+    //push products on  Schema ib DB
+    await Product.insertMany(sampleProducts);
+
+    console.log("Data has been inported successfully");
+
+    // выходит с программы
+    process.exit();
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+const destroyData = async () => {
+  try {
+    await Order.deleteMany();
+    await Product.deleteMany();
+    await User.deleteMany();
+
+    console.log("Data has been removed successfully");
+
+    process.exit();
+  } catch (error) {
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+if (process.argv[2] === "-d") {
+  destroyData();
 } else {
-    importData()
+  importData();
 }
