@@ -1,43 +1,55 @@
-import mongoose from 'mongoose'
-import bcrypt from 'bcrypt'
+import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 
-const userSchema = mongoose.Schema({
+const SALT_WORK_FACTOR = 10;
+
+const userSchema = mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     isAdmin: {
-        type: Boolean,
-        required: true,
-        default: false
-    }
-}, {
-    timestamps: true
-})
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-// comparing password with input password
-userSchema.methods.matchPassword =  function(enteredPassword) {
-    return bcrypt.compare(enteredPassword, this.password)
-}
+userSchema.methods.matchPassword = function (enteredPassword) {
+  return bcrypt.compare(enteredPassword, this.password);
+};
 
-// encrypt resgistered users password
-userSchema.pre('save', function(next){
-    if(!this.isModified('password')) {
-        next()
-    }
-    const salt = bcrypt.genSalt(10)
-    this.password = bcrypt.hash(this.password, salt)
-})
+userSchema.pre("save", function (next) {
+  const user = this;
 
-const User = mongoose.model('User', userSchema)
+  if (!user.isModified("password")) return next();
 
-export default User
+  bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
+    if (err) return next(err);
+
+    bcrypt.hash(user.password, salt, function (err, hash) {
+      if (err) return next(err);
+
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+const User = mongoose.model("User", userSchema);
+
+export default User;
