@@ -2,9 +2,6 @@ import asyncHandler from "express-async-handler";
 import generateToken from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 
-//fetch get token and atuh user
-//POST
-// /api/users/login
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -23,9 +20,7 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-// Register User Profile
-// POST /api/users
-const registerUser = asyncHandler(async (req, res, next) => {
+const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
 
   const userExists = await User.findOne({ email });
@@ -53,7 +48,6 @@ const registerUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-//GET user profile /api/users/profile
 const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
@@ -69,13 +63,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-//some updates of user's  profile
-//PUT api/users/profile
 const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
+
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+
     if (req.body.password) {
       user.password = req.body.password;
     }
@@ -96,28 +90,26 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 const getUsers = asyncHandler(async (req, res) => {
   const users = await User.find({});
+
   res.json(users);
 });
 
-//DELETE /api/users
-//ADMIN
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
+  const userId = req.params.id;
+
   if (user) {
     user.remove();
-    res.json({ message: "user has been removed" });
+    res.json({ message: `User ${userId} has been removed` });
   } else {
     res.status(404);
   }
 });
 
-//get user by id
-//get /api/users/:id
-//ADMIN
-//select means doesnt fetch the password cause we dont need it
 const getUserById = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id).select("-password");
+
   if (user) {
     res.json(user);
   } else {
@@ -125,9 +117,6 @@ const getUserById = asyncHandler(async (req, res) => {
   }
 });
 
-//some updates of user
-//PUT api/users/profile/:id
-//ADMIN
 const updateUser = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id);
 
