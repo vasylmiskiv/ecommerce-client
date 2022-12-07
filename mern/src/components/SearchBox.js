@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import React, { useState, useRef } from "react";
+import { Form, Button, Col, Row } from "react-bootstrap";
 
-const SearchBox = ({ history }) => {
+const SearchBox = ({ history, onChangeHeaderColor }) => {
   const [keyword, setKeyword] = useState("");
+
+  const colorPickerRef = useRef(null);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     if (keyword.trim()) {
       history.push(`/search/${keyword}`);
     } else {
@@ -14,19 +17,31 @@ const SearchBox = ({ history }) => {
   };
 
   return (
-    <div>
-      <Form onSubmit={submitHandler} inline>
-        <Form.Control
-          type="text"
-          onChange={(e) => setKeyword(e.target.value)}
-          placeholder="Search product..."
-          className="mr-sm-2 ml-sm-5"
-        ></Form.Control>
-        <Button type="submit" variant="outline-success" className="p-1">
-          Search
-        </Button>
-      </Form>
-    </div>
+    <Form onSubmit={submitHandler} inline className="d-flex justify-content-between">
+      <>
+        <Col>
+          <Form.Control
+            type="text"
+            onChange={(e) => setKeyword(e.target.value)}
+            placeholder="Search product..."
+            className=""
+          ></Form.Control>
+        </Col>
+      </>
+
+      <Button type="submit" variant="success" className="px-5 mx-2">
+        Search
+      </Button>
+
+      <Form.Control
+        type="color"
+        id="exampleColorInput"
+        defaultValue="#563d7c"
+        title="Choose your color"
+        ref={colorPickerRef}
+        onChange={() => onChangeHeaderColor(colorPickerRef.current.value)}
+      />
+    </Form>
   );
 };
 

@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   PRODUCT_LIST_REQUEST,
   PRODUCT_LIST_SUCCESS,
@@ -30,8 +31,13 @@ export const listProducts =
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
 
-      const { data } = await axiosInstance.get(
-        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+      const config = {
+        "Content-Type": "application/json",
+      };
+
+      const { data } = await axios.get(
+        `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`,
+        config
       );
 
       dispatch({
@@ -53,7 +59,11 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
-    const { data } = await axiosInstance.get(`/api/products/${id}`);
+    const config = {
+      "Content-Type": "application/json",
+    };
+
+    const { data } = await axios.get(`/api/products/${id}`, config);
 
     dispatch({
       type: PRODUCT_DETAILS_SUCCESS,
@@ -169,7 +179,11 @@ export const listTopProducts = () => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST });
 
-    const { data } = await axiosInstance.get(`/api/products/top`);
+    const config = {
+      "Content-Type": "application/json",
+    };
+
+    const { data } = await axios.get(`/api/products/top`, config);
 
     dispatch({
       type: PRODUCT_TOP_SUCCESS,
