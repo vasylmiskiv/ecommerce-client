@@ -2,7 +2,7 @@ import React from "react";
 import Helmet from "react-helmet";
 
 const Meta = ({
-  title = "Welcome to Turboshop",
+  title = "Welcome to StackStore",
   description = "Best products here",
   keywords = "electronics, buy electronics, iphone, ipods",
 }) => {
