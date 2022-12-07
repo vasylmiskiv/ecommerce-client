@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware from "redux-thunk";
+
 import { cartReducer } from "./reducers/cartReducers";
 import {
   productListReducer,
@@ -63,12 +63,10 @@ const userInfoFromStorage =
   localStorage.getItem("userInfo") &&
   JSON.parse(localStorage.getItem("userInfo"));
 
-//get from localstorage items address
 const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
   ? JSON.parse(localStorage.getItem("shippingAddress"))
   : {};
 
-// get from localstorage payment method
 const paymentMethodFromStorage = localStorage.getItem("paymentMethod")
   ? JSON.parse(localStorage.getItem("paymentMethod"))
   : {};

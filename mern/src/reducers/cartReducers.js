@@ -28,6 +28,7 @@ export const cartReducer = (
           cartItems: [...state.cartItems, item],
         };
       }
+
     case CART_REMOVE_ITEM:
       return {
         ...state,
@@ -39,16 +40,19 @@ export const cartReducer = (
         ...state,
         shippingAddress: action.payload,
       };
+
     case CART_SAVE_PAYMENT_METHOD:
       return {
         ...state,
         paymentMethod: action.payload,
       };
+
     case CART_RESET:
       return {
         ...state,
         cartItems: [],
       };
+
     default:
       return state;
   }

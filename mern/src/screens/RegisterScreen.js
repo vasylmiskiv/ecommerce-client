@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Form, Button, Row, Col } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
+import { register } from "../actions/userActions";
+import useAppSelector from "../hooks/useAppSelector";
+
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
-import { register } from "../actions/userActions";
 import Message from "../components/Message";
 
 const RegisterScreen = ({ location, history }) => {
@@ -16,7 +19,9 @@ const RegisterScreen = ({ location, history }) => {
 
   const dispatch = useDispatch();
 
-  const userRegister = useSelector((state) => state.userRegister);
+  const { userRegister } = useAppSelector((state) => ({
+    userRegister: state.userRegister,
+  }));
 
   const { loading, error, userInfo } = userRegister;
 
