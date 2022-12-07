@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+
 import { createOrder } from "../actions/orderActions";
 
 import CheckoutSteps from "../components/CheckoutSteps";
@@ -25,12 +26,10 @@ const PlaceOrderScreen = ({ history }) => {
     }
   }, [history, success, order]);
 
-  //rounded for total of sum and multiply of products
   const rounded = (number) => {
     return parseFloat(number).toFixed(2);
   };
 
-  //calc price
   cart.itemsPrice = cart.cartItems.reduce((acc, i) => acc + i.price * i.qty, 0);
 
   cart.shippingPrice = cart.itemsPrice > 100 ? 0 : 100;

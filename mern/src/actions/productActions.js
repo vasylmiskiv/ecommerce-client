@@ -29,6 +29,7 @@ export const listProducts =
   async (dispatch) => {
     try {
       dispatch({ type: PRODUCT_LIST_REQUEST });
+
       const { data } = await axiosInstance.get(
         `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
       );
@@ -51,6 +52,7 @@ export const listProducts =
 export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
+
     const { data } = await axiosInstance.get(`/api/products/${id}`);
 
     dispatch({

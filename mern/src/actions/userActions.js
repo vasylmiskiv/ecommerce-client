@@ -32,11 +32,13 @@ export const login = (email, password) => async (dispatch) => {
     dispatch({
       type: USER_LOGIN_REQUEST,
     });
+
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
+
     const { data } = await axios.post(
       "/api/users/login",
       { email, password },
@@ -69,16 +71,11 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET });
 };
 
-
 export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
-
-    console.log({
-      name, email, password
-    })
 
     const config = {
       headers: {
@@ -114,7 +111,6 @@ export const register = (name, email, password) => async (dispatch) => {
   }
 };
 
-// get user details
 export const getUserDetails = (id) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -132,7 +128,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
       },
     };
 
-    // получаем даннные
     const { data } = await axios.get(`/api/users/${id}`, config);
 
     dispatch({
@@ -150,7 +145,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
   }
 };
 
-// get user details
 export const updateUserProfile = (user) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -168,7 +162,6 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     };
 
-    // change data
     const { data } = await axios.put(`/api/users/profile`, user, config);
 
     dispatch({
@@ -186,7 +179,6 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
-// get list of users
 export const listUsers = () => async (dispatch, getState) => {
   try {
     dispatch({
@@ -202,7 +194,7 @@ export const listUsers = () => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    // change data
+
     const { data } = await axios.get(`/api/users`, config);
 
     dispatch({
@@ -235,7 +227,7 @@ export const deleteUser = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    // change data
+
     await axios.delete(`/api/users/${id}`, config);
 
     dispatch({
@@ -268,13 +260,13 @@ export const updateUser = (user) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    //change our user on db
+  
     const { data } = await axios.put(`/api/users/${user._id}`, user, config);
 
     dispatch({
       type: USER_UPDATE_SUCCESS,
     });
-    //throw data to state
+  
     dispatch({
       type: USER_DETAILS_SUCCESS,
       payload: data,
