@@ -27,7 +27,6 @@ import { USER_DETAILS_RESET } from "../constants/userConstants";
 import { ORDER_LIST_MY_RESET } from "../constants/orderConstants";
 import { CART_RESET } from "../constants/cartConstants";
 
-//login action
 export const login = (email, password) => async (dispatch) => {
   try {
     dispatch({
@@ -61,7 +60,6 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-//logout action
 export const logout = () => (dispatch) => {
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
@@ -71,12 +69,16 @@ export const logout = () => (dispatch) => {
   dispatch({ type: USER_LIST_RESET });
 };
 
-// register action
+
 export const register = (name, email, password) => async (dispatch) => {
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
     });
+
+    console.log({
+      name, email, password
+    })
 
     const config = {
       headers: {

@@ -4,6 +4,7 @@ import User from "../models/userModel.js";
 
 const isUserAuthorized = asyncHandler(async (req, res, next) => {
   let token;
+  console.log(req.headers);
 
   if (
     req.headers.authorization &&
