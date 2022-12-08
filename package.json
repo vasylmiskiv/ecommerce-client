@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "npm install --prefix mern && npm run build --prefix mern"
+    "heroku-postbuild": "npm install && npm install --prefix mern && npm run build --prefix mern"
   },
   "keywords": [],
   "author": "",
