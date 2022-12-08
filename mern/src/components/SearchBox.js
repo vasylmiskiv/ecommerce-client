@@ -32,15 +32,6 @@ const SearchBox = ({ history, onChangeHeaderColor }) => {
       <Button type="submit" variant="success" className="px-5 mx-2">
         Search
       </Button>
-
-      {/* <input
-        type="color"
-        id="exampleColorInput"
-        defaultValue="#563d7c"
-        title="Choose your color"
-        ref={colorPickerRef}
-        onChange={() => onChangeHeaderColor(colorPickerRef.current.value)}
-      /> */}
     </Form>
   );
 };
