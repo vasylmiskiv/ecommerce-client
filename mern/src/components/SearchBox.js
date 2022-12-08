@@ -17,7 +17,7 @@ const SearchBox = ({ history, onChangeHeaderColor }) => {
   };
 
   return (
-    <Form onSubmit={submitHandler} inline className="d-flex justify-content-between">
+    <Form onSubmit={submitHandler} inline className="m-auto">
       <>
         <Col>
           <Form.Control
@@ -32,15 +32,6 @@ const SearchBox = ({ history, onChangeHeaderColor }) => {
       <Button type="submit" variant="success" className="px-5 mx-2">
         Search
       </Button>
-
-      <Form.Control
-        type="color"
-        id="exampleColorInput"
-        defaultValue="#563d7c"
-        title="Choose your color"
-        ref={colorPickerRef}
-        onChange={() => onChangeHeaderColor(colorPickerRef.current.value)}
-      />
     </Form>
   );
 };

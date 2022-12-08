@@ -11,32 +11,33 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix mern && npm run build --prefix mern"
+    "heroku-postbuild": "npm install --prefix mern && npm run build --force --prefix mern"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.34",
-    "@fortawesome/free-solid-svg-icons": "^5.15.2",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "bcrypt": "^5.0.1",
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "bcrypt": "^5.1.0",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "express-async-handler": "^1.1.4",
+    "dicer": "^0.3.1",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.15",
+    "mongoose": "^6.8.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
-    "react-bootstrap-icons": "^1.4.0",
-    "react-cropper": "^2.1.7",
-    "react-icons": "^4.2.0",
+    "react-bootstrap-icons": "^1.10.2",
+    "react-cropper": "^2.1.8",
+    "react-icons": "^4.7.1",
     "react-paypal-button-v2": "^2.6.3"
   },
   "devDependencies": {
-    "concurrently": "^6.0.0",
-    "nodemon": "^2.0.7"
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
   }
 }
