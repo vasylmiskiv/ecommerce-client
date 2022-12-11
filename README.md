@@ -30,3 +30,12 @@ Create frontend prod build
 - `david12345@gmail.com` | `david12345`
 
 - `john@gmail.com` | `john12345`
+
+- - - -
+<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="react" width = 60px>
+<br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Redux_Logo.png" alt="redux" width = 120px>
+<br/>
+<img src="https://cdn.freebiesupply.com/logos/large/2x/nodejs-1-logo-svg-vector.svg"  alt="nodejs" width = 100px >
+<br/>
+<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg" alt="mongodb" width = 120px>
