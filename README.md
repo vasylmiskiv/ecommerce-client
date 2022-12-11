@@ -1,32 +1,32 @@
-##MERN SSR Full Stack app
+## MERN SSR Full Stack app
 
-## Run
-
+### Run
 Run frontend (:3000) & backend (:5000)
 - ` npm run dev`
 
 Run backend only
 - `npm run server`
 
-## Build & Deploy
+- - - -
+### Build & Deploy
 Create frontend prod build
-`cd mern`
+* `cd mern`
 
-`npm run build`
+* `npm run build`
 
-##Share data
+- - - -
+### Share data
 
-You can use the following commands to seed the database with sample of users and products or destroy all the data as well
+#### You can use the following commands to seed the database with sample of users and products or destroy all the data as well
 - Import data `npm run data:import`
 
 - Destroy data `npm run data:destroy`
 
-##Sample accounts
+- - - -
+### Sample accounts
 
-`
-vasylmiskiv@gmail.com | 12345 (Admin)
+- `vasylmiskiv@gmail.com` | `12345`(Admin)
 
-david12345@gmail.com | david12345
+- `david12345@gmail.com` | `david12345`
 
-john@gmail.com | john12345
-`
+- `john@gmail.com` | `john12345`
