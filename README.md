@@ -1,4 +1,4 @@
-## MERN SSR Full Stack app
+## [MERN SSR Full Stack app](https://stackstore.onrender.com/)
 
 ### Run
 Run frontend (:3000) & backend (:5000)
