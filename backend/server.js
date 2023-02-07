@@ -44,11 +44,11 @@ const __dirname = path.resolve();
 
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-app.use(express.static(path.join(__dirname, "/mern/build")));
+app.use(express.static(path.join(__dirname, "/client/build")));
 
 process.env.NODE_ENV === "production" &&
   app.get("/", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "mern", "build", "index.html"))
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
   );
 
 app.use(notFound);

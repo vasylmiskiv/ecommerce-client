@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { PayPalButton } from "react-paypal-button-v2";
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
@@ -229,7 +228,7 @@ const OrderScreen = ({ match, history }) => {
                 </Row>
               </ListGroup.Item>
 
-              {!order.isPaid && (
+              {/* {!order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -242,7 +241,7 @@ const OrderScreen = ({ match, history }) => {
                   )}
                   {loadingDeliver && <Loader />}
                 </ListGroup.Item>
-              )}
+              )} */}
               {userInfo &&
                 userInfo.isAdmin &&
                 order.isPaid &&
