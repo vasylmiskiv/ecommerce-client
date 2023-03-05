@@ -2,8 +2,8 @@ import React from "react";
 import Helmet from "react-helmet";
 
 const Meta = ({
-  title = "Welcome to StackStore",
-  description = "Best products here",
+  title = "Ecommerce store",
+  description = "Full stack ecommerce store app | Stack: React, React-router, Redux, Redux thunk, Express, Mongoose, MongoDB | Admin tools, dashborad, editing etc",
   keywords = "electronics, buy electronics, iphone, ipods",
 }) => {
   return (
