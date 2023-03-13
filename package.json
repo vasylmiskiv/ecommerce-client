@@ -1,5 +1,5 @@
 {
-  "name": "mernapp",
+  "name": "stackstore",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -7,11 +7,11 @@
   "scripts": {
     "start": "node backend/server",
     "server": "nodemon backend/server",
-    "client": "npm start --prefix mern",
+    "client": "npm start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix mern && npm run build --prefix mern"
+    "heroku-postbuild": "npm install && npm install --prefix client && npm run --openssl-legacy-provider build --prefix client"
   },
   "keywords": [],
   "author": "",
