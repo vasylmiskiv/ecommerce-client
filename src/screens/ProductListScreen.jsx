@@ -70,7 +70,7 @@ const ProductListScreen = ({ history, match }) => {
     <>
       <Row className="align-items-center">
         <Col>
-          <h1>Products</h1>
+          <h1 className="mt-4 text-3xl font-semibold">Products</h1>
         </Col>
         <Col className="text-right">
           <LinkContainer to={`/admin/product/create`}>

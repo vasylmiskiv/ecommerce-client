@@ -30,7 +30,7 @@ const OrderListScreen = ({ history }) => {
 
   return (
     <>
-      <h1>Orders</h1>
+      <h1 className="mt-4 text-3xl font-semibold">Orders</h1>
       {loading ? (
         <Loader />
       ) : error ? (

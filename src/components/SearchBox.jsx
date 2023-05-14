@@ -17,14 +17,14 @@ const SearchBox = ({ history }) => {
     <form onSubmit={submitHandler} className="mx-auto w-1/2 flex items-center">
       <input
         type="text"
-        className="rounded-l-lg w-full py-2 px-4 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white"
+        className="rounded-l-lg w-full py-2 px-4 border-t mr-0 border-b border-l text-gray-800 border-gray-200 bg-white outline-none"
         onChange={(e) => setKeyword(e.target.value)}
         placeholder="Search product..."
       />
 
       <button
         type="submit"
-        className="px-4 py-2 rounded-r-lg bg-green-500 text-white font-bold"
+        className="px-4 py-2 h-full rounded-r-lg bg-green-500 text-white font-bold hover:bg-green-600"
       >
         Search
       </button>
