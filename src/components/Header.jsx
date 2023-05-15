@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
 import { useHistory } from "react-router-dom";
 import SearchBox from "./SearchBox";
+import CurrencyWidget from "./CurrencyWidget";
 
 import "react-dropdown/style.css";
 
@@ -18,10 +19,9 @@ import { FaUsers, FaProductHunt, FaMoneyBill } from "react-icons/fa";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 
 const Header = () => {
-  const [headerColor, setHeaderColor] = useState("#3B82F6");
-
   const [isProfileOpen, seIsProfileOpen] = useState(false);
   const [isAdminToolsOpen, setIsAdminToolsOpen] = useState(false);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -75,7 +75,8 @@ const Header = () => {
           </Link>
         </div>
 
-        <SearchBox history={history} onChangeHeaderColor={setHeaderColor} />
+        <SearchBox history={history} />
+        <CurrencyWidget />
 
         <div className="flex items-center gap-8">
           <Link
@@ -133,7 +134,7 @@ const Header = () => {
           ) : (
             <Link
               to="/login"
-              className="text-white ml-4 no-underline font-bold flex flex-center items-center gap-2"
+              className="text-white ml-4 no-underline font-bold flex flex-center items-center gap-2 hover:underline"
             >
               <IoIosLogIn size={16} /> Sign In
             </Link>

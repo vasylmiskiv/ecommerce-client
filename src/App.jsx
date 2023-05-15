@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Container } from "react-bootstrap";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -24,10 +23,9 @@ import ProductCreateScreen from "./screens/ProductCreateScreen";
 const App = () => {
   return (
     <Router>
-      <Header />
-
-      <main className="py-3">
-        <Container>
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow">
           <Route path="/admin/orderlist" component={OrderListScreen} />
           <Route path="/admin/user/:id/edit" component={UserEditScreen} />
           <Route path="/admin/product/create" component={ProductCreateScreen} />
@@ -60,10 +58,10 @@ const App = () => {
             component={HomeScreen}
             exact
           />
-        </Container>
-      </main>
+        </main>
 
-      <Footer />
+        <Footer />
+      </div>
     </Router>
   );
 };

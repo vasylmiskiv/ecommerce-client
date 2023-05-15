@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form, Button, Row, Col } from "react-bootstrap";
+
 import { useDispatch, useSelector } from "react-redux";
 
 import { login } from "../actions/userActions";
 
-import FormContainer from "../components/FormContainer";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+
+import { HiOutlineLockClosed } from "react-icons/hi";
+import { AiOutlineMail } from "react-icons/ai";
+
+import LoginCover from "../assets/login-cover.jpg";
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState("");
@@ -33,45 +37,94 @@ const LoginScreen = ({ location, history }) => {
   };
 
   return (
-    <FormContainer>
-      <h1>Sign In</h1>
-      {error && <Message variant="danger">{error}</Message>}
-      {loading && <Loader />}
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId="email">
-          <Form.Label>Email Adress</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+    <div className="w-full h-screen flex justify-between">
+      <div className="w-1/2 h-full">
+        <img
+          src={LoginCover}
+          alt="login-cover"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="w-1/2 flex justify-center">
+        <div className=" mt-40 w-[700px] h-[500px] border py-5 px-16 shadow-lg rounded-lg">
+          <div className="text-3xl font-semibold">Sign In</div>
+          {error && <Message variant="danger">{error}</Message>}
+          {loading && <Loader />}
+          <form onSubmit={submitHandler} className="mt-8">
+            <div className="mb-6">
+              <label htmlFor="email" className="block mb-2 text-gray-600">
+                Email Address
+              </label>
+              <div className="flex items-center relative">
+                <AiOutlineMail
+                  size={18}
+                  className="absolute left-3 text-gray-500 mb-[3px]"
+                />
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border-b focus:outline-none focus:border-gray-400 transition-all outline-none duration-200"
+                />
+              </div>
+            </div>
 
-        <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
+            <div className="mb-6">
+              <label htmlFor="password" className="block mb-2 text-gray-600">
+                Password
+              </label>
 
-        <Button type="submit" variant="outline-primary">
-          Sign In
-        </Button>
-      </Form>
+              <div className="flex items-center relative">
+                <HiOutlineLockClosed
+                  size={18}
+                  className="absolute left-3 text-gray-500 mb-[3px]"
+                />
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border-b focus:outline-none focus:border-gray-400 transition-all outline-none duration-200"
+                />
+              </div>
+              <div className="mt-2 text-right">
+                <Link
+                  className="text-xs text-gray-500 no-underline hover:text-gray-700 hover:underline"
+                  to="#"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
 
-      <Row className="py-3">
-        <Col>
-          New user?
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>
-            Register
-          </Link>
-        </Col>
-      </Row>
-    </FormContainer>
+            <div className="mt-4 w-full text-center">
+              <button
+                type="submit"
+                className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600 duration-200"
+              >
+                Sign In
+              </button>
+              <div className="text-sm mt-4">
+                <div>
+                  New user?{" "}
+                  <Link
+                    to={
+                      redirect ? `/register?redirect=${redirect}` : "/register"
+                    }
+                    className="text-green-500 hover:text-green-600"
+                  >
+                    Register
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,10 @@
 import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+
+import { Link } from "react-router-dom";
+
+import { AiOutlinePlus } from "react-icons/ai";
 
 import { listProducts, deleteProduct } from "../actions/productActions";
 import { PRODUCT_CREATE_RESET } from "../constants/productConstants";
@@ -63,23 +66,23 @@ const ProductListScreen = ({ history, match }) => {
   };
 
   // const createProductHandler = () => {
-  //     dispatch(createProduct())
-  // }
+  //   dispatch(createProduct());
+  // };
 
   return (
-    <>
-      <Row className="align-items-center">
-        <Col>
-          <h1 className="mt-4 text-3xl font-semibold">Products</h1>
-        </Col>
-        <Col className="text-right">
-          <LinkContainer to={`/admin/product/create`}>
-            <Button className="my-3">
-              <i className="fas fa-plus"></i> Create a Product
-            </Button>
-          </LinkContainer>
-        </Col>
-      </Row>
+    <div className="container">
+      <div className="flex justify-between items-center">
+        <h1 className="mt-4 text-3xl font-semibold">Products</h1>
+
+        <Link
+          to={`/admin/product/create`}
+          className="mt-2 flex items-center bg-green-500 py-2 px-4 no-underline text-white hover:bg-green-600 rounded-lg duration-200"
+        >
+          <AiOutlinePlus />
+          <div>Create a product</div>
+        </Link>
+      </div>
+      <div className="h-[1px] w-full bg-gray-200"></div>
 
       {loadingDelete && loadingCreate && <Loader />}
       {errorDelete && <Message variant="danger">{errorDelete}</Message>}
@@ -96,51 +99,51 @@ const ProductListScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <>
-          <Table striped bordered hover responsive className="table-sm">
+        <div className="mt-3.5 overflow-x-auto shadow-lg rounded-lg">
+          <table className="table-auto w-full border-collapse">
             <thead>
-              <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th>TOOLS</th>
+              <tr className="bg-zinc-600 text-white">
+                <th className="px-4 py-2">ID</th>
+                <th className="px-4 py-2">Name</th>
+                <th className="px-4 py-2">Price</th>
+                <th className="px-4 py-2">Category</th>
+                <th className="px-4 py-2">Brand</th>
+                <th className="px-4 py-2">Tools</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) => (
                 <tr key={product._id}>
-                  <td>{product._id}</td>
-                  <td>{product.name}</td>
-                  <td>${product.price}</td>
-                  <td>{product.category}</td>
-                  <td>{product.brand}</td>
-                  <td>
+                  <td className="border px-4 py-2">{product._id}</td>
+                  <td className="border px-4 py-2">{product.name}</td>
+                  <td className="border px-4 py-2">${product.price}</td>
+                  <td className="border px-4 py-2">{product.category}</td>
+                  <td className="border px-4 py-2">{product.brand}</td>
+                  <td className="border px-4 py-2">
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <Button variant="light" className="btn-sm">
+                      <button className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 rounded-md">
                         <i className="fas fa-edit"></i>
-                      </Button>
+                      </button>
                     </LinkContainer>
 
-                    <Button
-                      variant="danger"
-                      className="btn-sm"
+                    <button
+                      className="bg-red-500 text-white hover:bg-red-600 px-2 py-1 rounded-md ml-2"
                       onClick={() => {
                         deleleteHandler(product._id);
                       }}
                     >
                       <i className="fas fa-trash"></i>
-                    </Button>
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
-          </Table>
+          </table>
+
           <Paginate pages={pages} page={page} isAdmin={true} />
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

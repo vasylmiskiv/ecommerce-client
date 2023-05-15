@@ -27,7 +27,7 @@ const HomeScreen = ({ match }) => {
   }, [dispatch, keyword, pageNumber]);
 
   return (
-    <div className="pb-20">
+    <div className="container pb-20 pt-4">
       <Meta />
       {!keyword ? (
         <ProductCarousel />

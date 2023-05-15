@@ -88,7 +88,7 @@ const ProductCreateScreen = ({ history }) => {
   };
 
   return (
-    <>
+    <div className="container">
       <Link to="/admin/productlist" className="btn btn-light my-3">
         Go back
       </Link>
@@ -134,7 +134,7 @@ const ProductCreateScreen = ({ history }) => {
               </Form.Group>
             </Col>
 
-            <Form.Group controlId="image">
+            {/* <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
@@ -148,6 +148,12 @@ const ProductCreateScreen = ({ history }) => {
                 custom
                 onChange={uploadFileHandler}
               ></Form.File>
+              {uploading && <Loader />}
+            </Form.Group> */}
+
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Default file input example</Form.Label>
+              <Form.Control type="file" onChange={uploadFileHandler} />
               {uploading && <Loader />}
             </Form.Group>
 
@@ -187,7 +193,7 @@ const ProductCreateScreen = ({ history }) => {
           </Form>
         )}
       </FormContainer>
-    </>
+    </div>
   );
 };
 

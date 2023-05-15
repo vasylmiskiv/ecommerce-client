@@ -1,6 +1,4 @@
 import { useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 import { listUsers, deleteUser } from "../actions/userActions";
@@ -41,25 +39,24 @@ const UserListScreen = ({ history }) => {
     }
   };
 
-  console.log(users);
-
   return (
-    <>
-      <h1 className="mt-4 text-3xl font-semibold">Users</h1>
+    <div className="container mt-4">
+      <h1 className="text-3xl font-bold">Users</h1>
+      <div className="h-[1px] w-full bg-gray-200"></div>
       {loading ? (
         <Loader />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="mt-3.5 overflow-x-auto shadow-lg rounded-lg">
           <table className="table-auto w-full border-collapse border border-gray-300">
             <thead>
-              <tr className="bg-gray-200">
+              <tr className="bg-zinc-600 text-white">
                 <th className="py-2 px-4 border">ID</th>
-                <th className="py-2 px-4 border">NAME</th>
-                <th className="py-2 px-4 border">EMAIL</th>
-                <th className="py-2 px-4 border">ADMIN</th>
-                <th className="py-2 px-4 border">TOOLS</th>
+                <th className="py-2 px-4 border">Name</th>
+                <th className="py-2 px-4 border">Email</th>
+                <th className="py-2 px-4 border">Admin</th>
+                <th className="py-2 px-4 border">Tools</th>
               </tr>
             </thead>
             <tbody>
@@ -68,7 +65,7 @@ const UserListScreen = ({ history }) => {
                   <td className="py-2 px-4 border">{user._id}</td>
                   {user.isAdmin ? (
                     <td className="py-2 px-4 border">
-                      <div className="flex justify-center text-red-600 font-medium">
+                      <div className="flex justify-center text-green-600 font-medium">
                         {user.name}
                       </div>
                     </td>
@@ -78,7 +75,7 @@ const UserListScreen = ({ history }) => {
                     </td>
                   )}
                   <td className="py-2 px-4 border">
-                    <a href={`mailto: ${user.email}`}>{user.email}</a>
+                    <a href={`mailto:${user.email}`}>{user.email}</a>
                   </td>
                   <td className="py-2 px-4 border">
                     {user.isAdmin && (
@@ -89,14 +86,15 @@ const UserListScreen = ({ history }) => {
                   </td>
                   <td className="py-2 px-4 border">
                     <div className="flex justify-center gap-2">
-                      <Link to={`user/${user._id}/edit`}>
-                        <button className="bg-green-200 btn-sm">
-                          <MdEditNote size={18} color="black" />
-                        </button>
+                      <Link
+                        to={`user/${user._id}/edit`}
+                        className="h-full px-3 py-1.5 rounded-lg bg-green-300 hover:bg-green-500"
+                      >
+                        <MdEditNote size={18} color="black" />
                       </Link>
                       {!user.isAdmin ? (
                         <button
-                          className="bg-red-200 btn-sm hover:bg-red-400"
+                          className="px-3 py-1 rounded-lg bg-red-200  hover:bg-red-400"
                           onClick={() => {
                             deleleteHandler(user._id);
                           }}
@@ -106,7 +104,7 @@ const UserListScreen = ({ history }) => {
                       ) : (
                         <button
                           disabled
-                          className="bg-gray-200 btn-sm cursor-not-allowed"
+                          className="px-3 py-1 rounded-lg bg-gray-200 cursor-not-allowed"
                           onClick={() => {
                             deleleteHandler(user._id);
                           }}
@@ -122,7 +120,7 @@ const UserListScreen = ({ history }) => {
           </table>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

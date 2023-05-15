@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
@@ -61,7 +61,7 @@ const ProfileScreen = ({ history }) => {
   };
 
   return (
-    <div className="mt-4 flex gap-5">
+    <div className="container mt-4 flex gap-5">
       <div className="w-1/2">
         <h1 className="text-3xl font-semibold">User Profile</h1>
         <div className="h-[1px] w-full bg-gray-200"></div>
@@ -174,7 +174,7 @@ const ProfileScreen = ({ history }) => {
         ) : errorOrders ? (
           <Message variant="danger">{errorOrders}</Message>
         ) : (
-          <div className="mt-3.5 overflow-x-hidden shadow-lg rounded-lg">
+          <div className="mt-3.5 overflow-x-auto shadow-lg rounded-lg">
             <table className="table-auto w-full border-collapse border">
               <thead>
                 <tr className="bg-zinc-600 text-white">

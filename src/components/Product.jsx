@@ -3,31 +3,42 @@ import Rating from "./Rating";
 
 const Product = ({ product }) => {
   return (
-    <div className="bg-white mt-4 rounded-lg h-[450px] overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 ease-in-out transform">
-      <Link to={`/product/${product._id}`}>
-        <img
-          src={`${import.meta.env.VITE_API_URL}${product.image}`}
-          alt={product.name}
-          className="w-full h-64 object-cover"
-        />
+    <div className="h-[500px] relative flex flex-col mt-4 rounded-lg overflow-hidden shadow-lg">
+      <Link to={`/product/${product._id}`} className="text-black">
+        <div className="w-full h-[200px] overflow-hidden">
+          <img
+            src={`${import.meta.env.VITE_API_URL}${product.image}`}
+            alt={product.name}
+            className="w-full h-full object-cover transition-transform duration-500 transform scale-100 hover:scale-105"
+          />
+        </div>
       </Link>
-      <div className="p-4">
-        <Link to={`/product/${product._id}`}>
-          <h3 className="text-lg font-medium text-gray-800 hover:text-gray-900 transition-colors duration-300 ease-in-out">
-            {product.name}
-          </h3>
-        </Link>
-        <div className="flex items-center my-2">
-          <Link to={`/product/${product._id}`}>
+      <div className="h-full flex flex-col justify-between py-4 px-6">
+        <div>
+          <Link
+            to={`/product/${product._id}`}
+            className="text-lg text-black no-underline "
+          >
+            <div className="transition-all duration-200 hover:text-green-500 truncate">
+              {product.name}
+            </div>
+          </Link>
+          <Link
+            to={`/product/${product._id}`}
+            className="flex items-center mt-2 text-black no-underline hover:underline"
+          >
             <Rating
               value={product.rating}
               text={`${product.numReviews} reviews`}
-              color={"#ff6863"}
             />
           </Link>
+          <p className="mt-4 text-justify">
+            {product.description.substring(0, 110)}...
+          </p>
         </div>
+
         <div className="flex items-center justify-between">
-          <span className="text-lg font-medium text-gray-800">
+          <span className="text-lg font-medium text-black">
             ${product.price}
           </span>
         </div>
