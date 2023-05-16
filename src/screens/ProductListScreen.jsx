@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch } from "react-redux";
 
 import { Link } from "react-router-dom";
@@ -13,6 +12,9 @@ import useAppSelector from "../hooks/useAppSelector";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Paginate from "../components/Paginate";
+
+import { FaTrashAlt } from "react-icons/fa";
+import { MdEditNote } from "react-icons/md";
 
 const ProductListScreen = ({ history, match }) => {
   const pageNumber = match.params.pageNumber || 1;
@@ -120,20 +122,22 @@ const ProductListScreen = ({ history, match }) => {
                   <td className="border px-4 py-2">{product.category}</td>
                   <td className="border px-4 py-2">{product.brand}</td>
                   <td className="border px-4 py-2">
-                    <LinkContainer to={`/admin/product/${product._id}/edit`}>
-                      <button className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 rounded-md">
-                        <i className="fas fa-edit"></i>
+                    <div className="flex justify-center gap-2">
+                      <Link
+                        to={`/admin/product/${product._id}/edit`}
+                        className="px-3 py-1.5 rounded-lg bg-green-300 hover:bg-green-500"
+                      >
+                        <MdEditNote size={18} color="black" />
+                      </Link>
+                      <button
+                        className="px-3 py-1 rounded-lg bg-red-200  hover:bg-red-400"
+                        onClick={() => {
+                          deleleteHandler(product._id);
+                        }}
+                      >
+                        <FaTrashAlt />
                       </button>
-                    </LinkContainer>
-
-                    <button
-                      className="bg-red-500 text-white hover:bg-red-600 px-2 py-1 rounded-md ml-2"
-                      onClick={() => {
-                        deleleteHandler(product._id);
-                      }}
-                    >
-                      <i className="fas fa-trash"></i>
-                    </button>
+                    </div>
                   </td>
                 </tr>
               ))}

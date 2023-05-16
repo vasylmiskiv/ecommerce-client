@@ -1,13 +1,17 @@
-import { Spinner } from "react-bootstrap";
+import { PulseLoader } from "react-spinners";
 
-const Loader = () => {
+const Loader = ({ button }) => {
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <Spinner
-        animation="grow"
-        role="status"
-        style={{ width: "80px", height: "80px" }}
-      ></Spinner>
+    <div
+      className={`w-full flex ${
+        !button ? `pt-40` : `px-4 py-[7px]`
+      } justify-center`}
+    >
+      <PulseLoader
+        color={button ? `#fff` : `#52525b`}
+        size={`${button ? 7 : 20}`}
+        speedMultiplier="0.3"
+      />
     </div>
   );
 };

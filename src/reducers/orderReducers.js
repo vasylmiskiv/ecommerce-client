@@ -77,7 +77,7 @@ export const orderDetailsReducer = (
       };
 
     case ORDER_DETAILS_RESET:
-      return { orderItems: [] };
+      return { order: {} };
 
     default:
       return state;

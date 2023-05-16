@@ -146,7 +146,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Form.Group>
             </Col>
 
-            <Form.Group controlId="image">
+            {/* <Form.Group controlId="image">
               <Form.Label>Image</Form.Label>
               <Form.Control
                 type="text"
@@ -161,7 +161,7 @@ const ProductEditScreen = ({ match, history }) => {
                 onChange={uploadFileHandler}
               ></Form.File>
               {uploading && <Loader />}
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group controlId="brand">
               <Form.Label>Brand</Form.Label>

@@ -49,7 +49,6 @@ const LoginScreen = ({ location, history }) => {
         <div className=" mt-40 w-[700px] h-[500px] border py-5 px-16 shadow-lg rounded-lg">
           <div className="text-3xl font-semibold">Sign In</div>
           {error && <Message variant="danger">{error}</Message>}
-          {loading && <Loader />}
           <form onSubmit={submitHandler} className="mt-8">
             <div className="mb-6">
               <label htmlFor="email" className="block mb-2 text-gray-600">
@@ -105,7 +104,11 @@ const LoginScreen = ({ location, history }) => {
                 type="submit"
                 className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600 duration-200"
               >
-                Sign In
+                {loading ? (
+                  <Loader className="absolute" button={true} />
+                ) : (
+                  `Sign In`
+                )}
               </button>
               <div className="text-sm mt-4">
                 <div>

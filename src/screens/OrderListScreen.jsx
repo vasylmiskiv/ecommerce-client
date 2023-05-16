@@ -51,7 +51,7 @@ const OrderListScreen = ({ history }) => {
               </tr>
             </thead>
             <tbody>
-              {orders.length ? (
+              {orders?.length ? (
                 orders.map((order) => (
                   <tr key={order._id}>
                     <td className="border px-4 py-2">{order._id}</td>
@@ -93,7 +93,7 @@ const OrderListScreen = ({ history }) => {
                       )}
                     </td>
                     <td className="border px-4 py-2">
-                      <LinkContainer to={`/admin/user/${order._id}`}>
+                      <LinkContainer to={`/order/${order._id}`}>
                         <button className="bg-gray-200 text-gray-700 hover:bg-gray-300 px-2 py-1 rounded-md">
                           Details
                         </button>

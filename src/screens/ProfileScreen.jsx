@@ -11,6 +11,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 
 import { AiOutlineCheck } from "react-icons/ai";
+import { FaTimes } from "react-icons/fa";
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState("");
@@ -61,7 +62,7 @@ const ProfileScreen = ({ history }) => {
   };
 
   return (
-    <div className="container mt-4 flex gap-5">
+    <div className="container mt-4 flex gap-6">
       <div className="w-1/2">
         <h1 className="text-3xl font-semibold">User Profile</h1>
         <div className="h-[1px] w-full bg-gray-200"></div>
@@ -188,11 +189,11 @@ const ProfileScreen = ({ history }) => {
               <tbody>
                 {orders.map((order) => (
                   <tr key={order._id} className="border hover:bg-gray-100">
-                    <td className="px-4">
+                    <td className="px-3">
                       <div className="flex items-center justify-between gap-2">
                         <Link
                           to={`/order/${order._id}`}
-                          className="text-black no-underline hover:underline"
+                          className="text-green-500 no-underline hover:underline hover:text-green-600 transition-all duration-200"
                         >
                           {order._id}
                         </Link>
@@ -201,19 +202,21 @@ const ProfileScreen = ({ history }) => {
                     <td className="px-4 py-2 border">
                       {order.createdAt.substring(0, 10)}
                     </td>
-                    <td className="px-4 py-2 border">{order.totalPrice}</td>
-                    <td className="px-4 py-2 border">
+                    <td className="px-2.5 py-2 border text-right">
+                      {order.totalPrice}
+                    </td>
+                    <td className="px-2 py-2 border">
                       {order.isPaid ? (
                         order.paidAt.substring(0, 10)
                       ) : (
-                        <i className="fas fa-times text-red-500"></i>
+                        <FaTimes className="mx-auto" />
                       )}
                     </td>
-                    <td className="px-4 py-2 border">
+                    <td className="px-2 py-2 border">
                       {order.isDelivered ? (
                         order.deliveredAt.substring(0, 10)
                       ) : (
-                        <i className="fas fa-times text-red-500"></i>
+                        <FaTimes className="mx-auto" />
                       )}
                     </td>
                   </tr>

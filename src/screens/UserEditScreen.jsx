@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
 import { USER_UPDATE_RESET } from "../constants/userConstants";
@@ -8,7 +7,6 @@ import { getUserDetails, updateUser } from "../actions/userActions";
 import useAppSelector from "../hooks/useAppSelector";
 
 import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 
 const UserEditScreen = ({ match, history }) => {
@@ -53,12 +51,15 @@ const UserEditScreen = ({ match, history }) => {
   };
 
   return (
-    <>
-      <Link to="/admin/userslist" className="btn btn-primary my-3">
+    <div className="container">
+      <Link
+        to="/admin/userslist"
+        className="inline-block my-10 bg-zinc-600 px-4 py-2 text-white no-underline rounded-lg hover:bg-zinc-800"
+      >
         Go back
       </Link>
-      <FormContainer>
-        <h1>Edit user</h1>
+      <div className="max-w-[650px] mx-auto bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <h1 className="text-2xl font-bold mb-4">Edit user</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
@@ -66,44 +67,68 @@ const UserEditScreen = ({ match, history }) => {
         ) : error ? (
           <Message variant="danger">{error}</Message>
         ) : (
-          <Form onSubmit={submitHandler}>
-            <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
+          <form onSubmit={submitHandler} className="w-full ">
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="name"
+              >
+                Name
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="name"
                 type="name"
                 placeholder="Your name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email Adress</Form.Label>
-              <Form.Control
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
+                Email Address
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="email"
                 type="email"
                 placeholder="Your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
+              />
+            </div>
 
-            <Form.Group controlId="isAdmin">
-              <Form.Label>Password</Form.Label>
-              <Form.Check
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="isAdmin"
+              >
+                Password
+              </label>
+              <input
+                className="mr-2 leading-tight"
                 type="checkbox"
-                label="isAdmin"
+                id="isAdmin"
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
-              ></Form.Check>
-            </Form.Group>
+              />
+              <span className="text-sm">isAdmin</span>
+            </div>
 
-            <Button type="submit" variant="success">
+            <button
+              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              type="submit"
+            >
               Update
-            </Button>
-          </Form>
+            </button>
+          </form>
         )}
-      </FormContainer>
-    </>
+      </div>
+    </div>
   );
 };
 

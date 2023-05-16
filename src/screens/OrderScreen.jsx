@@ -3,12 +3,14 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { CART_RESET } from "../constants/cartConstants";
 import {
   ORDER_PAY_RESET,
   ORDER_DELIVER_RESET,
   ORDER_LIST_MY_RESET,
   ORDER_LIST_RESET,
   ORDER_CREATE_RESET,
+  ORDER_DETAILS_RESET,
 } from "../constants/orderConstants";
 import {
   getOrderDetails,
@@ -50,6 +52,7 @@ const OrderScreen = ({ match, history }) => {
     if (!userInfo) {
       history.push("/login");
     }
+
     const addPayPalScript = async () => {
       const { data: clientId } = await axios.get(
         `${import.meta.env.VITE_API_URL}/api/config/paypal`
@@ -68,6 +71,7 @@ const OrderScreen = ({ match, history }) => {
       dispatch(getOrderDetails(orderId));
       dispatch({ type: ORDER_CREATE_RESET });
       dispatch({ type: ORDER_LIST_MY_RESET });
+      dispatch({ type: CART_RESET });
       dispatch({ type: ORDER_LIST_RESET });
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch({ type: ORDER_PAY_RESET });
@@ -97,138 +101,145 @@ const OrderScreen = ({ match, history }) => {
     <div>
       <ListGroup variant="flush"> </ListGroup>
 
-      <Row>
-        <Col md={8}>
-          <ListGroup variant="flush">
-            {order.isPaid ? (
-              <ListGroup.Item variant="success">
-                <h1>Order {order.userId._id}</h1>
-              </ListGroup.Item>
-            ) : (
-              <ListGroup.Item variant="dark">
-                <h1>Order {order.userId._id}</h1>
-              </ListGroup.Item>
-            )}
+      <div className="container">
+        <div className="mt-5 flex justify-between">
+          <div className="w-1/2">
+            <ListGroup variant="flush">
+              {order.isPaid ? (
+                <ListGroup.Item variant="success">
+                  <h1>Order {order.userId._id}</h1>
+                </ListGroup.Item>
+              ) : (
+                <ListGroup.Item variant="dark">
+                  <h1>Order {order.userId._id}</h1>
+                </ListGroup.Item>
+              )}
 
-            <ListGroup.Item>
-              <h2>Shipping</h2>
-              <p>
-                {" "}
-                <strong>Name: </strong> {userInfo.name}
-              </p>
-              <p>
-                <strong>Email: </strong>
-                <a href={`mailto:${userInfo.email}`}>{userInfo.email}</a>
-              </p>
+              <ListGroup.Item>
+                <h2>Shipping</h2>
+                <p>
+                  {" "}
+                  <strong>Name: </strong> {userInfo.name}
+                </p>
+                <p>
+                  <strong>Email: </strong>
+                  <a href={`mailto:${userInfo.email}`}>{userInfo.email}</a>
+                </p>
 
-              <p>
-                <strong>Address: </strong>
-                {order.shippingAddress.address},&nbsp;
-                {order.shippingAddress.city},&nbsp;
-                {order.shippingAddress.postalCode},&nbsp;
-                {order.shippingAddress.country}&nbsp;
-              </p>
-              <p>
-                <div>
-                  {order.isDelivered ? (
+                <p>
+                  <strong>Address: </strong>
+                  {order.shippingAddress.address},&nbsp;
+                  {order.shippingAddress.city},&nbsp;
+                  {order.shippingAddress.postalCode},&nbsp;
+                  {order.shippingAddress.country}&nbsp;
+                </p>
+                <p>
+                  <div>
+                    {order.isDelivered ? (
+                      <Message variant="success">
+                        {" "}
+                        Has been delivered {order.deliveredAt}{" "}
+                      </Message>
+                    ) : (
+                      <Message variant="primary">
+                        {" "}
+                        Have not delivered yet
+                      </Message>
+                    )}
+                  </div>
+                </p>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <h2>Payment Method</h2>
+                <p>
+                  <strong>Method: </strong> {order.paymentMethod}
+                </p>
+
+                <p>
+                  {order.isPaid ? (
                     <Message variant="success">
                       {" "}
-                      Has been delivered {order.deliveredAt}{" "}
+                      Has been paid {order.paidAt}{" "}
                     </Message>
                   ) : (
-                    <Message variant="primary"> Have not delivered yet</Message>
+                    <Message variant="primary"> Have not paid yet</Message>
                   )}
-                </div>
-              </p>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              <h2>Payment Method</h2>
-              <p>
-                <strong>Method: </strong> {order.paymentMethod}
-              </p>
+                </p>
+              </ListGroup.Item>
 
-              <p>
-                {order.isPaid ? (
-                  <Message variant="success">
-                    {" "}
-                    Has been paid {order.paidAt}{" "}
-                  </Message>
+              <ListGroup.Item>
+                <h2>Order Items</h2>
+                {order.orderItems.length === 0 ? (
+                  <Message>Orders are empty</Message>
                 ) : (
-                  <Message variant="primary"> Have not paid yet</Message>
+                  <ListGroup variant="flush">
+                    {order.orderItems.map((item, index) => (
+                      <ListGroup.Item key={index}>
+                        <Row>
+                          <Col md={3}>
+                            <Image
+                              src={`${import.meta.env.VITE_API_URL}${
+                                item.image
+                              }`}
+                              alt={item.name}
+                              fluid
+                              rounded
+                            />
+                          </Col>
+                          <Col>
+                            <Link to={`/product/${item.product}`}>
+                              {item.name}
+                            </Link>
+                          </Col>
+                          <Col md={4}>
+                            {item.qty} x ${item.price} = $
+                            {Number(item.qty * item.price).toFixed(2)}
+                          </Col>
+                        </Row>
+                      </ListGroup.Item>
+                    ))}
+                  </ListGroup>
                 )}
-              </p>
-            </ListGroup.Item>
-
-            <ListGroup.Item>
-              <h2>Order Items</h2>
-              {order.orderItems.length === 0 ? (
-                <Message>Orders are empty</Message>
-              ) : (
-                <ListGroup variant="flush">
-                  {order.orderItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={3}>
-                          <Image
-                            src={`${import.meta.env.VITE_API_URL}${item.image}`}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
-                        </Col>
-                        <Col>
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </Col>
-                        <Col md={4}>
-                          {item.qty} x ${item.price} = $
-                          {Number(item.qty * item.price).toFixed(2)}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
-            </ListGroup.Item>
-          </ListGroup>
-        </Col>
-        <Col md={4}>
-          <Card>
-            <ListGroup varient="flush">
-              <ListGroup.Item>
-                <h2>Order Summary</h2>
               </ListGroup.Item>
+            </ListGroup>
+          </div>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>Items</Col>
-                  <Col>${rounded(order.itemsPrice)}</Col>
-                </Row>
-              </ListGroup.Item>
+          <Col md={4}>
+            <Card>
+              <ListGroup varient="flush">
+                <ListGroup.Item>
+                  <h2>Order Summary</h2>
+                </ListGroup.Item>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>Shipping</Col>
-                  <Col>${order.shippingPrice}</Col>
-                </Row>
-              </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Items</Col>
+                    <Col>${rounded(order.itemsPrice)}</Col>
+                  </Row>
+                </ListGroup.Item>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>VAT(20%)</Col>
-                  <Col>${order.taxPrice}</Col>
-                </Row>
-              </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Shipping</Col>
+                    <Col>${order.shippingPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
 
-              <ListGroup.Item>
-                <Row>
-                  <Col>Total</Col>
-                  <Col>${order.totalPrice}</Col>
-                </Row>
-              </ListGroup.Item>
+                <ListGroup.Item>
+                  <Row>
+                    <Col>VAT(20%)</Col>
+                    <Col>${order.taxPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
 
-              {/* {!order.isPaid && (
+                <ListGroup.Item>
+                  <Row>
+                    <Col>Total</Col>
+                    <Col>${order.totalPrice}</Col>
+                  </Row>
+                </ListGroup.Item>
+
+                {/* {!order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -242,24 +253,25 @@ const OrderScreen = ({ match, history }) => {
                   {loadingDeliver && <Loader />}
                 </ListGroup.Item>
               )} */}
-              {userInfo &&
-                userInfo.isAdmin &&
-                order.isPaid &&
-                !order.isDelivered && (
-                  <ListGroup.Item>
-                    <Button
-                      type="button"
-                      className="btn btn-block"
-                      onClick={deliverHandler}
-                    >
-                      Mark as delivered
-                    </Button>
-                  </ListGroup.Item>
-                )}
-            </ListGroup>
-          </Card>
-        </Col>
-      </Row>
+                {userInfo &&
+                  userInfo.isAdmin &&
+                  order.isPaid &&
+                  !order.isDelivered && (
+                    <ListGroup.Item>
+                      <Button
+                        type="button"
+                        className="btn btn-block"
+                        onClick={deliverHandler}
+                      >
+                        Mark as delivered
+                      </Button>
+                    </ListGroup.Item>
+                  )}
+              </ListGroup>
+            </Card>
+          </Col>
+        </div>
+      </div>
     </div>
   );
 };

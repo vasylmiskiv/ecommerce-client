@@ -7,7 +7,7 @@ import { RiWallet3Fill } from "react-icons/ri";
 
 export default function CheckoutSteps({ step1, step2, step3, step4 }) {
   return (
-    <div>
+    <>
       <Nav
         style={{ fontSize: "17px", color: "#284A6C" }}
         className="justify-content-around mb-4"
@@ -56,6 +56,6 @@ export default function CheckoutSteps({ step1, step2, step3, step4 }) {
           )}
         </Nav.Item>
       </Nav>
-    </div>
+    </>
   );
 }
