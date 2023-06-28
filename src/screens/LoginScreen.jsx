@@ -33,6 +33,7 @@ const LoginScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
+
     dispatch(login(email, password));
   };
 
@@ -46,8 +47,8 @@ const LoginScreen = ({ location, history }) => {
         />
       </div>
       <div className="w-1/2 flex justify-center">
-        <div className=" mt-40 w-[700px] h-[500px] border py-5 px-16 shadow-lg rounded-lg">
-          <div className="text-3xl font-semibold">Sign In</div>
+        <div className="mt-36 w-[700px] h-[580px] border pt-10 pb-20 px-16 shadow-lg rounded-lg">
+          <div className="text-3xl font-semibold mb-4">Sign In</div>
           {error && <Message variant="danger">{error}</Message>}
           <form onSubmit={submitHandler} className="mt-8">
             <div className="mb-6">
