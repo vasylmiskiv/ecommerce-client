@@ -27,10 +27,7 @@ const ProductCarousel = () => {
       {products.map((product) => (
         <Carousel.Item key={product._id}>
           <Link to={`/product/${product._id}`}>
-            <Image
-              src={`${import.meta.env.VITE_API_URL}${product.image}`}
-              alt={product.name}
-            />
+            <Image src={product.image} alt={product.name} />
             <Carousel.Caption className="carousel-caption">
               <h3>
                 {product.name} ${product.price}{" "}

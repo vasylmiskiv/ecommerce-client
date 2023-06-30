@@ -7,7 +7,7 @@ const Product = ({ product }) => {
       <Link to={`/product/${product._id}`} className="text-black">
         <div className="w-full h-[200px] overflow-hidden">
           <img
-            src={`${import.meta.env.VITE_API_URL}${product.image}`}
+            src={product.image}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-500 transform scale-100 hover:scale-105"
           />

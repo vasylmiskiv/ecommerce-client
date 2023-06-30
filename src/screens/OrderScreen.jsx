@@ -178,9 +178,7 @@ const OrderScreen = ({ match, history }) => {
                         <Row>
                           <Col md={3}>
                             <Image
-                              src={`${import.meta.env.VITE_API_URL}${
-                                item.image
-                              }`}
+                              src={item.image}
                               alt={item.name}
                               fluid
                               rounded

@@ -58,11 +58,13 @@ const HomeScreen = ({ match }) => {
               ))
             )}
           </Row>
-          <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : null}
-          />
+          <div className="mt-10 flex justify-center">
+            <Paginate
+              pages={pages}
+              page={page}
+              keyword={keyword ? keyword : null}
+            />
+          </div>
         </>
       )}
     </div>

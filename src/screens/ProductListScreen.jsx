@@ -143,10 +143,11 @@ const ProductListScreen = ({ history, match }) => {
               ))}
             </tbody>
           </table>
-
-          <Paginate pages={pages} page={page} isAdmin={true} />
         </div>
       )}
+      <div className="py-10 flex justify-center">
+        <Paginate pages={pages} page={page} isAdmin={true} />
+      </div>
     </div>
   );
 };

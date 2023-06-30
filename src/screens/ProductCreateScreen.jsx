@@ -69,21 +69,21 @@ const ProductCreateScreen = ({ history }) => {
 
     formData.append("image", file);
     setUploading(true);
+
     try {
-      const config = {
-        headers: { "Content-Type": "multipart/form-data" },
-      };
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/upload`,
-        formData,
-        config
+      const responseImgBb = await axios.post(
+        `${import.meta.env.VITE_IMGBB_API}/1/upload?key=${
+          import.meta.env.VITE_IMGBB_API_KEY
+        }`,
+        formData
       );
 
-      setImage(data);
+      const imageUrl = responseImgBb.data.data.url;
+      setImage(imageUrl);
+
       setUploading(false);
     } catch (error) {
-      console.log(error);
-      setUploading(false);
+      throw new Error("Failed to create hero");
     }
   };
 

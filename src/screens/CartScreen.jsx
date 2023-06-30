@@ -56,12 +56,7 @@ const CartScreen = ({ match, location, history }) => {
                 <ListGroup.Item key={item.product}>
                   <Row>
                     <Col md={2}>
-                      <Image
-                        src={`${import.meta.env.VITE_API_URL}${item.image}`}
-                        alt={item.name}
-                        fluid
-                        rounded
-                      />
+                      <Image src={item.image} alt={item.name} fluid rounded />
                     </Col>
 
                     <Col md={2}>
