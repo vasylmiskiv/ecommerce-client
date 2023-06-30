@@ -61,7 +61,7 @@ const Header = () => {
   }, [profileDropdownRef, adminToolsDropdownRef]);
 
   return (
-    <header className="bg-zinc-800 text-white py-4">
+    <header className="bg-zinc-800 text-white py-3">
       <div className="container flex gap-8">
         <div className="flex justify-between">
           <Link
@@ -69,7 +69,7 @@ const Header = () => {
             className="text-white no-underline flex items-center justify-center"
           >
             <img src={LogoPath} alt="logo" className="w-5" />
-            <div className="text-xl hover:decoration-none">
+            <div className="text-xl hover:decoration-none font-semibold">
               <span className="text-green-500 text-2xl">E</span>commerce
             </div>
           </Link>
@@ -134,7 +134,7 @@ const Header = () => {
           ) : (
             <Link
               to="/login"
-              className="text-white ml-4 no-underline font-bold flex flex-center items-center gap-2 hover:underline"
+              className="text-white py-2 px-4 bg-green-500 rounded no-underline font-bold flex flex-center items-center gap-2 hover:bg-green-600 duration-200"
             >
               <IoIosLogIn size={16} /> Sign In
             </Link>
