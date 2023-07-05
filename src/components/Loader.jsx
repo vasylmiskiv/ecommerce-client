@@ -9,7 +9,7 @@ const Loader = ({ button }) => {
     >
       <PulseLoader
         color={button ? `#fff` : `#52525b`}
-        size={`${button ? 7 : 20}`}
+        size={`${button ? `7px` : `20px`}`}
         speedMultiplier="0.3"
       />
     </div>
