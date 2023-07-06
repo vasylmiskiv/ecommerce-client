@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch } from "react-redux";
 
+import { GrClose } from "react-icons/gr";
+
 import { listOrders } from "../actions/orderActions";
 import useAppSelector from "../hooks/useAppSelector";
 
@@ -55,14 +57,20 @@ const OrderListScreen = ({ history }) => {
                 orders.map((order) => (
                   <tr key={order._id}>
                     <td className="border px-4 py-2">{order._id}</td>
-                    {order.userId.isAdmin ? (
+                    {order.customer.isAdmin ? (
                       <td className="border px-4 py-2">
-                        <p className="text-red-500">{order.userId.name}</p>
+                        <div className="flex items-center justify-center">
+                          <div className="text-red-500">
+                            {order.customer.name}
+                          </div>
+                        </div>
                       </td>
                     ) : (
-                      <td className="border px-4 py-2">{order.userId.name}</td>
+                      <td className="border px-4 py-2">
+                        {order.customer.name}
+                      </td>
                     )}
-                    {!order.userId.isAdmin && order.userId ? (
+                    {!order.customer.isAdmin && order.customer ? (
                       <td className="border px-4 py-2">
                         <a
                           href={`mailto:${order.userId.email}`}
@@ -72,25 +80,33 @@ const OrderListScreen = ({ history }) => {
                         </a>
                       </td>
                     ) : (
-                      <td className="border px-4 py-2"></td>
+                      <td className="border px-4 py-2">
+                        <a href={`mailto:${order.customer.email}`}>
+                          {order.customer.email}
+                        </a>
+                      </td>
                     )}
                     <td className="border px-4 py-2">
                       {order.createdAt.substring(0, 10)}
                     </td>
                     <td className="border px-4 py-2">{order.totalPrice}</td>
                     <td className="border px-4 py-2">
-                      {order.isPaid ? (
-                        order.paidAt.substring(0, 10)
-                      ) : (
-                        <i className="fas fa-times text-red-500"></i>
-                      )}
+                      <div className="flex items-center justify-center">
+                        {order.isPaid ? (
+                          order.paidAt.substring(0, 10)
+                        ) : (
+                          <GrClose />
+                        )}
+                      </div>
                     </td>
-                    <td className="border px-4 py-2">
-                      {order.isDelivered ? (
-                        order.deliveredAt.substring(0, 10)
-                      ) : (
-                        <i className="fas fa-times text-red-500"></i>
-                      )}
+                    <td className="border">
+                      <div className="flex items-center justify-center">
+                        {order.isDelivered ? (
+                          order.deliveredAt.substring(0, 10)
+                        ) : (
+                          <GrClose />
+                        )}
+                      </div>
                     </td>
                     <td className="border px-4 py-2">
                       <LinkContainer to={`/order/${order._id}`}>

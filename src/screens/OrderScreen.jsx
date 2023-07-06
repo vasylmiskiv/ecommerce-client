@@ -107,11 +107,11 @@ const OrderScreen = ({ match, history }) => {
             <ListGroup variant="flush">
               {order.isPaid ? (
                 <ListGroup.Item variant="success">
-                  <h1>Order {order.userId._id}</h1>
+                  <h1>Order {order.customer._id}</h1>
                 </ListGroup.Item>
               ) : (
                 <ListGroup.Item variant="dark">
-                  <h1>Order {order.userId._id}</h1>
+                  <h1>Order {order.customer._id}</h1>
                 </ListGroup.Item>
               )}
 
