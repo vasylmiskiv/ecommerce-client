@@ -3,13 +3,13 @@ import Rating from "./Rating";
 
 const Product = ({ product }) => {
   return (
-    <div className="h-[500px] relative flex flex-col mt-4 rounded-lg overflow-hidden shadow-lg">
+    <div className="h-[500px] relative flex flex-col mt-4 overflow-hidden shadow-lg">
       <Link to={`/product/${product._id}`} className="text-black">
         <div className="w-full h-[200px] overflow-hidden">
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-500 transform scale-100 hover:scale-105"
+            className="w-full h-full object-cover transition-transform transform scale-100 opacity-90 hover:opacity-100 duration-500 hover:scale-105"
           />
         </div>
       </Link>

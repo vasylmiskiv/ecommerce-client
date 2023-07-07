@@ -136,7 +136,8 @@ const Header = () => {
               to="/login"
               className="text-white py-2 px-4 bg-green-500 rounded no-underline font-bold flex flex-center items-center gap-2 hover:bg-green-600 duration-200"
             >
-              <IoIosLogIn size={16} /> Sign In
+              <IoIosLogIn size={16} />
+              Sign In
             </Link>
           )}
 
