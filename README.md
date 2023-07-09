@@ -1,36 +1,17 @@
-## [MERN Full Stack app Client Side](https://stackstore.onrender.com/)
+## [MERN Full Stack app API](https://vmiskivecommerce-api.onrender.com) 
 
+### [Separate server folder from my MERN Full Stack app](https://github.com/vasylmiskiv/fullstack-ecommerceapp)
+
+### Attention: Server deployed on a free cloud platform you should wait for 30 seconds until it works
+
+### [Backend](https://github.com/vasylmiskiv/ecommerce-api)
+---
 ### Run
-
-Run frontend (:3000) & backend (:5000)
-
-- ` npm run dev`
-
-Run backend only
-
-- `npm run server`
-
----
-
-### Build & Deploy
-
-Create frontend prod build
-
-- `cd mern`
-
-- `npm run build`
-
----
-
-### Share data
-
-#### You can use the following commands to seed the database with sample of users and products or destroy all the data as well
-
-- Import data `npm run data:import`
-
-- Destroy data `npm run data:destroy`
-
----
+1. Download or clone the project
+2. Open the project
+3. In the root folder install packages `npm install` or `yarn`
+4. Run the project `npm run start`
+5. Done. Server is started and listening port 3000
 
 ### Sample accounts
 
@@ -40,12 +21,4 @@ Create frontend prod build
 
 - `john@gmail.com` | `john12345`
 
----
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="react" width = 60px>
-<br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/30/Redux_Logo.png" alt="redux" width = 120px>
-<br/>
-<img src="https://cdn.freebiesupply.com/logos/large/2x/nodejs-1-logo-svg-vector.svg"  alt="nodejs" width = 100px >
-<br/>
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg" alt="mongodb" width = 120px>
