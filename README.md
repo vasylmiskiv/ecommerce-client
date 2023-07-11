@@ -14,11 +14,6 @@
 5. Done. Server is started and listening port 3000
 
 ### Sample accounts
-
-- `vasylmiskiv@gmail.com` | `12345`(Admin)
-
-- `david12345@gmail.com` | `david12345`
-
-- `john@gmail.com` | `john12345`
+(soon)
 
 
