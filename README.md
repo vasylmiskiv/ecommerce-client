@@ -14,6 +14,10 @@
 5. Done. Server is started and listening port 3000
 
 ### Sample accounts
-(soon)
+Admin (with access to admin tools):
+email: admin@example.com
+password: 123456
 
-
+or sign up a new user
+https://vmiskivecommerce.vercel.app/register
+  
