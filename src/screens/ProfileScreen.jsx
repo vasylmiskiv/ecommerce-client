@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 import useAppSelector from "../hooks/useAppSelector";
+import { useDispatch, useSelector } from "react-redux";
 
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
 import { AiOutlineCheck } from "react-icons/ai";
 import { FaTimes } from "react-icons/fa";
+
+import { userDetailsSelector } from "../services/usersApi";
+import { useUpdateUserProfileMutation } from "../services/usersApi";
+import { setCredentials } from "../redux/userSlice";
 
 const ProfileScreen = ({ history }) => {
   const [name, setName] = useState("");
@@ -22,42 +26,76 @@ const ProfileScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
-  const { userDetails, userLogin, userUpdateProfile, orderListMy } =
-    useAppSelector((state) => ({
-      userDetails: state.userDetails,
-      userLogin: state.userLogin,
-      userUpdateProfile: state.userUpdateProfile,
-      orderListMy: state.orderListMy,
-    }));
+  // const { userDetails, userLogin, userUpdateProfile, orderListMy } =
+  //   useAppSelector((state) => ({
+  //     userDetails: state.userDetails,
+  //     userLogin: state.userLogin,
+  //     userUpdateProfile: state.userUpdateProfile,
+  //     orderListMy: state.orderListMy,
+  //   }));
 
-  const { loading, error, user } = userDetails;
-  const { userInfo } = userLogin;
-  const { success } = userUpdateProfile;
-  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+  // const { loading, error, user } = userDetails;
+  // const { userInfo } = userLogin;
+  // const { success } = userUpdateProfile;
+  // const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+
+  const { isLoading, isError, isSuccess } = useSelector(userDetailsSelector());
+
+  const { userInfo } = useSelector((state) => state.user);
+
+  const navigate = useNavigate();
+
+  const [updateUserProfile] = useUpdateUserProfileMutation();
 
   useEffect(() => {
     dispatch(listMyOrders());
 
     if (!userInfo) {
-      history.push("/login");
-    } else {
-      if (!user.name) {
-        dispatch(getUserDetails("profile"));
-        dispatch(listMyOrders());
-      } else {
-        setName(user.name);
-        setEmail(user.email);
-      }
+      navigate("/login");
     }
-  }, [userInfo, user, dispatch, history]);
 
-  const sumbitHandler = (e) => {
+    setName(userInfo.name);
+    setEmail(userInfo.email);
+  }, []);
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      navigate(-1);
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [navigate]);
+
+  const sumbitHandler = async (e) => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
       setMessage("Password do not match");
-    } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }));
+      return;
+    }
+
+    const userDataToUpdate = {
+      _id: userInfo._id,
+      name,
+      email,
+    };
+
+    if (password !== "") {
+      userDataToUpdate.password = password;
+    }
+
+    try {
+      const { data } = await updateUserProfile(userDataToUpdate);
+
+      if (data) {
+        dispatch(setCredentials({ ...data }));
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -66,11 +104,11 @@ const ProfileScreen = ({ history }) => {
       <div className="w-1/2">
         <h1 className="text-3xl font-semibold">User Profile</h1>
         <div className="h-[1px] w-full bg-gray-200"></div>
-        {success && (
+        {isSuccess && (
           <div className="bg-blue-100 border-t-4 border-blue-500 rounded-b text-blue-900 px-5 py-2 shadow-md mt-2">
             <p className="font-bold flex gap-1 items-center">
               <AiOutlineCheck size={16} className="mb-0.5" />
-              Success: <span className="font-normal">{success}</span>
+              Success: <span className="font-normal">{isSuccess}</span>
             </p>
           </div>
         )}
@@ -80,13 +118,13 @@ const ProfileScreen = ({ history }) => {
             <p>{message}</p>
           </div>
         )}
-        {error && (
+        {isError && (
           <div className="bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-3 shadow-md my-2">
             <p className="font-bold">Error:</p>
             <p>{error}</p>
           </div>
         )}
-        {loading && <Loader />}
+        {isLoading && <Loader />}
         <form
           onSubmit={sumbitHandler}
           className="mt-3.5 border py-5 px-20 rounded-md shadow "
@@ -170,7 +208,7 @@ const ProfileScreen = ({ history }) => {
       <div className="w-1/2">
         <h1 className="text-3xl font-bold">My orders</h1>
         <div className="h-[1px] w-full bg-gray-200"></div>
-        {loadingOrders ? (
+        {/* {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant="danger">{errorOrders}</Message>
@@ -224,7 +262,7 @@ const ProfileScreen = ({ history }) => {
               </tbody>
             </table>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { GrClose } from "react-icons/gr";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
@@ -32,13 +33,16 @@ const OrderListScreen = ({ history }) => {
   const { loading, error, orders } = orderList;
   const { userInfo } = userLogin;
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (userInfo.isAdmin) {
       dispatch(listOrders());
     } else {
-      history.push("/login");
+      navigate("/login");
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, navigate, userInfo]);
 
   const handleItemSort = (id, order) => {
     setTableHeaderItems((prevItems) =>
@@ -78,8 +82,8 @@ const OrderListScreen = ({ history }) => {
     sort(order);
   };
 
-  const handleGetOrderDetails = (orderId) => {
-    dispatch(getOrderDetails(orderId));
+  const handleGetOrderDetails = (id) => {
+    dispatch(getOrderDetails(id));
   };
 
   return (

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   Row,
@@ -23,12 +23,10 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
 
-const ProductScreen = ({ match, history }) => {
+const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
-
-  const dispatch = useDispatch();
 
   const { productDetails, userLogin, productReviewCreate } = useAppSelector(
     (state) => ({
@@ -43,8 +41,27 @@ const ProductScreen = ({ match, history }) => {
   const { error: errorProductReview, success: successProductReview } =
     productReviewCreate;
 
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
+    const handlePopstate = () => {
+      if (location.key) {
+        navigate(-1);
+      }
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [location, navigate]);
+
+  useEffect(() => {
+    dispatch(listProductDetails(id));
 
     if (successProductReview) {
       alert("Review submitted");
@@ -52,18 +69,18 @@ const ProductScreen = ({ match, history }) => {
       dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
     }
 
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match, successProductReview]);
+    dispatch(listProductDetails(id));
+  }, [dispatch, id, successProductReview]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    navigate(`/cart/${id}?qty=${qty}`);
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     dispatch(
-      createProductReview(match.params.id, {
+      createProductReview(id, {
         rating,
         comment,
       })

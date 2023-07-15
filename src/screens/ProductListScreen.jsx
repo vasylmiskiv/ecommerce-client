@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { AiOutlinePlus } from "react-icons/ai";
 
@@ -17,7 +17,11 @@ import { FaTrashAlt } from "react-icons/fa";
 import { MdEditNote } from "react-icons/md";
 
 const ProductListScreen = ({ history, match }) => {
-  const pageNumber = match.params.pageNumber || 1;
+  const { pageNumber } = useParams();
+  const parsedPageNumber = pageNumber || "1";
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -47,14 +51,14 @@ const ProductListScreen = ({ history, match }) => {
   useEffect(() => {
     dispatch({ type: PRODUCT_CREATE_RESET });
     if (!userInfo.isAdmin) {
-      history.push("/login");
+      navigate("/login");
     } else {
-      dispatch(listProducts("", pageNumber));
+      dispatch(listProducts("", parsedPageNumber));
     }
   }, [
     dispatch,
     userInfo,
-    history,
+    navigate,
     successDelete,
     successCreate,
     createdProduct,

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -22,47 +22,48 @@ import ProductCreateScreen from "./screens/ProductCreateScreen";
 
 const App = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-grow">
-          <Route path="/admin/orderlist" component={OrderListScreen} />
-          <Route path="/admin/user/:id/edit" component={UserEditScreen} />
-          <Route path="/admin/product/create" component={ProductCreateScreen} />
-          <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
-          <Route
-            path="/admin/productlist"
-            component={ProductListScreen}
-            exact
-          />
-          <Route
-            path="/admin/productlist/:pageNumber"
-            component={ProductListScreen}
-            exact
-          />
-          <Route path="/admin/userslist" component={UserListScreen} />
-          <Route path="/order/:id" component={OrderScreen} />
-          <Route path="/placeorder" component={PlaceOrderScreen} />
-          <Route path="/payment" component={PaymentScreen} />
-          <Route path="/shipping" component={ShippingScreen} />
-          <Route path="/profile" component={ProfileScreen} />
-          <Route path="/register" component={RegisterScreen} />
-          <Route path="/login" component={LoginScreen} />
-          <Route path="/product/:id" component={ProductScreen} />
-          <Route path="/cart/:id?" component={CartScreen} />
-          <Route path="/" component={HomeScreen} exact />
-          <Route path="/search/:keyword" component={HomeScreen} exact />
-          <Route path="/page/:pageNumber" component={HomeScreen} exact />
-          <Route
-            path="/page/:keyword/page/:pageNumber"
-            component={HomeScreen}
-            exact
-          />
+          <Routes>
+            <Route path="/admin/orderlist" element={<OrderListScreen />} />
+            <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+            <Route
+              path="/admin/product/create"
+              element={<ProductCreateScreen />}
+            />
+            <Route
+              path="/admin/product/:id/edit"
+              element={<ProductEditScreen />}
+            />
+            <Route path="/admin/productlist" element={<ProductListScreen />} />
+            <Route
+              path="/admin/productlist/:pageNumber"
+              element={<ProductListScreen />}
+            />
+            <Route path="/admin/userslist" element={<UserListScreen />} />
+            <Route path="/order/:id" element={<OrderScreen />} />
+            <Route path="/placeorder" element={<PlaceOrderScreen />} />
+            <Route path="/payment" element={<PaymentScreen />} />
+            <Route path="/shipping" element={<ShippingScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/register" element={<RegisterScreen />} />
+            <Route path="/login" element={<LoginScreen />} />
+            <Route path="/product/:id" element={<ProductScreen />} />
+            <Route path="/cart/:id?" element={<CartScreen />} />
+            <Route path="/" element={<HomeScreen />} />
+            <Route path="/search/:keyword" element={<HomeScreen />} />
+            <Route path="/page/:pageNumber" element={<HomeScreen />} />
+            <Route
+              path="/page/:keyword/page/:pageNumber"
+              element={<HomeScreen />}
+            />
+          </Routes>
         </main>
-
         <Footer />
       </div>
-    </Router>
+    </BrowserRouter>
   );
 };
 

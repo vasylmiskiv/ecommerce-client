@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Form, Button, Col } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 
@@ -12,9 +12,7 @@ import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import Message from "../components/Message";
 
-const ProductEditScreen = ({ match, history }) => {
-  const productId = match.params.id;
-
+const ProductEditScreen = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [image, setImage] = useState("");
@@ -23,6 +21,12 @@ const ProductEditScreen = ({ match, history }) => {
   const [countInStock, setCountInStock] = useState(0);
   const [description, setDescription] = useState("");
   const [uploading, setUploading] = useState(false);
+
+  const { id } = useParams();
+  const productId = id;
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -41,7 +45,7 @@ const ProductEditScreen = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
-      history.push("/admin/productlist");
+      navigate("/admin/productlist");
     } else {
       if (!product.name || product._id !== productId) {
         dispatch(listProductDetails(productId));

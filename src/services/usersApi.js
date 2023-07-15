@@ -1,15 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import { baseQuery } from "../api/apiConfig";
 
-const productApi = createApi({
-  reducerPath: "productApi",
+export const usersApi = createApi({
+  reducerPath: "usersApi",
   baseQuery,
   endpoints: (builder) => ({
-    getProducts: builder.query({
-      query: () => ({
-        url: "/products",
+    loginUser: builder.mutation({
+      query: (credentials) => ({
+        url: "/users/login",
+        method: "POST",
+        body: credentials,
+        credentials: "include",
       }),
     }),
     registerUser: builder.mutation({
@@ -23,10 +25,12 @@ const productApi = createApi({
       query: (userId) => `/users/${userId}`,
     }),
     updateUserProfile: builder.mutation({
-      query: ({ userId, user }) => ({
-        url: `/users/${userId}`,
+      query: (user) => ({
+        url: `/users/${user._id}`,
         method: "PUT",
         body: user,
+        credentials: "include",
+        meta: { addToken: true },
       }),
     }),
     getListOfUsers: builder.query({
@@ -45,24 +49,6 @@ export const {
   useUpdateUserProfileMutation,
   useGetListOfUsersQuery,
   useDeleteUserMutation,
-} = userApi;
+} = usersApi;
 
-const userSlice = createSlice({
-  name: "user",
-  initialState: {
-    products: [],
-    pages: 0,
-    page: 0,
-  },
-  reducers: {
-    logoutUser: (state) => {
-      state.userInfo = null;
-    },
-  },
-});
-
-export const { logoutUser } = userSlice.actions;
-
-export const userSelector = userApi.endpoints.getUserDetails.select;
-
-export default userApi.reducer;
+export const userDetailsSelector = usersApi.endpoints.getUserDetails.select;

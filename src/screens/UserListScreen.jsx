@@ -10,11 +10,9 @@ import Message from "../components/Message";
 import { FaTrashAlt, FaUserCheck } from "react-icons/fa";
 import { MdEditNote } from "react-icons/md";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 
-const UserListScreen = ({ history }) => {
-  const dispatch = useDispatch();
-
+const UserListScreen = () => {
   const { userList, userLogin, userDelete } = useAppSelector((state) => ({
     userList: state.userList,
     userLogin: state.userLogin,
@@ -25,16 +23,22 @@ const UserListScreen = ({ history }) => {
   const { userInfo } = userLogin;
   const { success } = userDelete;
 
+  const { id } = useParams();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (userInfo.isAdmin) {
       dispatch(listUsers());
     } else {
-      history.push("/login");
+      navigate("/login");
     }
-  }, [dispatch, history, success, userInfo]);
+  }, [dispatch, navigate, success, userInfo]);
 
   const deleleteHandler = (id) => {
-    if (window.confirm("Do u confirm it?")) {
+    if (window.confirm(`Do you want to delete ${id}?`)) {
       dispatch(deleteUser(id));
     }
   };
@@ -87,7 +91,7 @@ const UserListScreen = ({ history }) => {
                   <td className="py-2 px-4 border">
                     <div className="flex justify-center gap-2">
                       <Link
-                        to={`user/${user._id}/edit`}
+                        to={`/admin/user/${user._id}/edit`}
                         className="h-full px-3 py-1.5 rounded-lg bg-green-300 hover:bg-green-500"
                       >
                         <MdEditNote size={18} color="black" />

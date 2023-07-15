@@ -1,10 +1,17 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchBox = ({ history }) => {
   const [keyword, setKeyword] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    history.listen((location) => {
+    return navigateListener();
+  }, [navigate]);
+
+  const navigateListener = () => {
+    return navigate((location) => {
       if (
         !location.pathname.startsWith("/search") &&
         !location.pathname.startsWith("/product")
@@ -12,15 +19,15 @@ const SearchBox = ({ history }) => {
         setKeyword("");
       }
     });
-  }, [history]);
+  };
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     if (keyword.trim()) {
-      history.push(`/search/${keyword}`);
+      navigate(`/search/${keyword}`);
     } else {
-      history.push("/");
+      navigate("/");
     }
   };
 

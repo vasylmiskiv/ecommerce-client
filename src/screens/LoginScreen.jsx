@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,29 +12,54 @@ import { HiOutlineLockClosed } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
 
 import LoginCover from "../assets/login-cover.jpg";
+import {
+  userDetailsSelector,
+  useLoginUserMutation,
+} from "../services/usersApi";
+import { setCredentials } from "../redux/userSlice";
 
-const LoginScreen = ({ location, history }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin);
+  // const userLogin = useSelector((state) => state.userLogin);
 
-  const { loading, error, userInfo } = userLogin;
+  // const { loading, error, userInfo } = userLogin;
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  // const { data, isLoading, isError, error } = useLoginUserMutation({
+  //   keyword,
+  //   pageNumber,
+  // });
+
+  const redirect = location.search
+    ? Number(new URLSearchParams(location.search)).split("=")[1]
+    : "/";
+
+  const userDetails = useSelector(userDetailsSelector());
+
+  const [loginUser, { isLoading, isSuccess, isError }] = useLoginUserMutation();
 
   useEffect(() => {
-    if (userInfo) {
-      history.push(redirect);
+    if (isSuccess) {
+      navigate(redirect);
     }
-  }, [history, userInfo, redirect]);
+  }, [history, userDetails, redirect]);
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
 
-    dispatch(login(email, password));
+    try {
+      const { data } = await loginUser({ email, password });
+
+      dispatch(setCredentials({ ...data }));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -49,7 +74,7 @@ const LoginScreen = ({ location, history }) => {
       <div className="w-1/2 flex justify-center">
         <div className="mt-36 w-[700px] h-[580px] border pt-10 pb-20 px-16 shadow-lg rounded-lg">
           <div className="text-3xl font-semibold mb-4">Sign In</div>
-          {error && <Message variant="danger">{error}</Message>}
+          {userDetails.error && <Message variant="danger">{error}</Message>}
           <form onSubmit={submitHandler} className="mt-8">
             <div className="mb-6">
               <label htmlFor="email" className="block mb-2 text-gray-600">
@@ -105,7 +130,7 @@ const LoginScreen = ({ location, history }) => {
                 type="submit"
                 className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md w-full hover:bg-green-600 duration-200"
               >
-                {loading ? (
+                {userDetails.loading ? (
                   <Loader className="absolute" button={true} />
                 ) : (
                   `Sign In`

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useParams, useLocation, useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -14,10 +14,15 @@ import {
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import Message from "../components/Message";
 
-const CartScreen = ({ match, location, history }) => {
-  const productId = match.params.id;
+const CartScreen = () => {
+  const { id } = useParams();
 
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const qty = location.search
+    ? Number(new URLSearchParams(location.search).get("qty"))
+    : 1;
 
   const dispatch = useDispatch();
 
@@ -28,17 +33,29 @@ const CartScreen = ({ match, location, history }) => {
   const { cartItems } = cart;
 
   useEffect(() => {
-    if (productId) {
-      dispatch(addToCart(productId, qty));
+    if (id) {
+      dispatch(addToCart(id, qty));
     }
-  }, [dispatch, productId, qty]);
+  }, [dispatch, id, qty]);
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      navigate(-1);
+    };
+
+    window.addEventListener("popstate", handlePopstate);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopstate);
+    };
+  }, [navigate]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
 
   const checkoutHandler = () => {
-    history.push("/login?redirect=shipping");
+    navigate("/login?redirect=shipping");
   };
 
   return (
@@ -105,13 +122,12 @@ const CartScreen = ({ match, location, history }) => {
             <ListGroup>
               <ListGroup.Item>
                 <h2>
-                  {" "}
                   Subtotal (
                   {cartItems.reduce(
                     (acc, currentItem) => acc + currentItem.qty,
                     0
                   )}
-                  ) items{" "}
+                  ) items
                 </h2>
                 $
                 {cartItems

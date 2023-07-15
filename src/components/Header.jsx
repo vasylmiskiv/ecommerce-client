@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import SearchBox from "./SearchBox";
 import CurrencyWidget from "./CurrencyWidget";
 
@@ -18,22 +19,26 @@ import { CgProfile, CgLogOut } from "react-icons/cg";
 import { FaUsers, FaProductHunt, FaMoneyBill } from "react-icons/fa";
 import { SlArrowUp, SlArrowDown } from "react-icons/sl";
 
+import { userDetailsSelector } from "../services/usersApi";
+import { logoutUser } from "../redux/userSlice";
+
 const Header = () => {
   const [isProfileOpen, seIsProfileOpen] = useState(false);
   const [isAdminToolsOpen, setIsAdminToolsOpen] = useState(false);
 
+  const { userInfo } = useSelector((state) => state.user);
+
   const dispatch = useDispatch();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const profileDropdownRef = useRef(null);
   const adminToolsDropdownRef = useRef(null);
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+  const userDetails = useSelector(userDetailsSelector());
 
   const logoutHandler = () => {
-    dispatch(logout());
-    history.push("/");
+    dispatch(logoutUser());
+    navigate("/");
   };
 
   useEffect(() => {
@@ -141,7 +146,7 @@ const Header = () => {
             </Link>
           )}
 
-          {userInfo && userInfo.isAdmin && (
+          {!userDetails.isUninitialized && (
             <div className="relative" ref={adminToolsDropdownRef}>
               <button
                 className="font-bold py-2 rounded inline-flex items-center"

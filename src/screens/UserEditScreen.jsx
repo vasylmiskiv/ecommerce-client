@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { USER_UPDATE_RESET } from "../constants/userConstants";
@@ -9,14 +9,10 @@ import useAppSelector from "../hooks/useAppSelector";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 
-const UserEditScreen = ({ match, history }) => {
-  const userId = match.params.id;
-
+const UserEditScreen = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
-
-  const dispatch = useDispatch();
 
   const { userDetails, userUpdate } = useAppSelector((state) => ({
     userDetails: state.userDetails,
@@ -30,9 +26,14 @@ const UserEditScreen = ({ match, history }) => {
     success: successUpdate,
   } = userUpdate;
 
+  const { id: userId } = useParams();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (successUpdate) {
-      history.push(`/admin/userslist`);
+      navigate(-1);
       dispatch({ type: USER_UPDATE_RESET });
     } else {
       if (!user.name || user._id !== userId) {
@@ -43,7 +44,7 @@ const UserEditScreen = ({ match, history }) => {
         setIsAdmin(user.isAdmin);
       }
     }
-  }, [user, userId, dispatch, history, successUpdate]);
+  }, [user, userId, dispatch, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

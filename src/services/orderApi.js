@@ -45,20 +45,3 @@ export const {
   useGetMyOrdersQuery,
   useGetAllOrdersQuery,
 } = orderApi;
-
-// const orderSlice = createSlice({
-//   name: "order",
-//   initialState: {
-//     createOrder: {},
-//     orderDetails: { loading: true, orderItems: [], shippingAddress: {} },
-//     payOrder: {},
-//     deliverOrder: {},
-//     myOrders: { orders: [] },
-//     orders: { orders: [] },
-//   },
-//   reducers: {},
-// });
-
-// export const orderSelector = (state) => state.order;
-
-// export default orderSlice.reducer;

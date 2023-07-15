@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { CART_RESET } from "../constants/cartConstants";
@@ -23,16 +23,8 @@ import useAppSelector from "../hooks/useAppSelector";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
-const OrderScreen = ({ match, history }) => {
-  const orderId = match.params.id;
-
+const OrderScreen = () => {
   const [sdkReady, setSdkReady] = useState(false);
-
-  const dispatch = useDispatch();
-
-  const rounded = (number) => {
-    return parseFloat(number).toFixed(2);
-  };
 
   const { orderDetails } = useAppSelector((state) => ({
     orderDetails: state.orderDetails,
@@ -48,9 +40,20 @@ const OrderScreen = ({ match, history }) => {
   const orderDeliver = useSelector((state) => state.orderDeliver);
   const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
+  const { id } = useParams();
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const rounded = (number) => {
+    return parseFloat(number).toFixed(2);
+  };
+
   useEffect(() => {
     if (!userInfo) {
-      history.push("/login");
+      navigate("/login");
     }
 
     const addPayPalScript = async () => {
@@ -68,7 +71,7 @@ const OrderScreen = ({ match, history }) => {
     };
 
     if (!order || successPay || successDeliver) {
-      dispatch(getOrderDetails(orderId));
+      dispatch(getOrderDetails(id));
       dispatch({ type: ORDER_CREATE_RESET });
       dispatch({ type: ORDER_LIST_MY_RESET });
       dispatch({ type: CART_RESET });
@@ -83,10 +86,10 @@ const OrderScreen = ({ match, history }) => {
         setSdkReady(true);
       }
     }
-  }, [orderId, history, dispatch, successPay, order, successDeliver]);
+  }, [id, navigate, dispatch, successPay, order, successDeliver]);
 
   const successPaymentHandler = (paymentResult) => {
-    dispatch(payOrder(orderId, paymentResult));
+    dispatch(payOrder(id, paymentResult));
   };
 
   const deliverHandler = () => {
